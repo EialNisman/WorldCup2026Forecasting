@@ -1,2 +1,7 @@
 1.DataCleaning-R/kaggle_data
+1.DataCleaning-R/PlayerStats.ipynb
 .gitignore
+3.SimulationStudy/test.ipynb
+.venv
+METHODOLOGY_NOTES.MD
+tmp_scrape_manager_team_matches.R

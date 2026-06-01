@@ -1,0 +1,177 @@
+tournament_id,team_id,team_name,team_code,manager_id,coach_name_nft,coach_url_nft,pre_wc_team_matches_coached,coach_team_matches_source,coach_team_matches_cutoff_date,prior_wc_matches_coached,prior_wc_group_matches_coached,prior_wc_round_of_16_matches_coached,prior_wc_quarterfinal_matches_coached,prior_wc_semifinal_matches_coached,prior_wc_third_place_matches_coached,prior_wc_final_matches_coached,prior_world_cups_coached
+WC-2010,T-01,Algeria,DZA,M-366,"Saâdane, Rabah",https://www.national-football-teams.com/coach/53653/Rabah_Saadane.html,28,National Football Teams coach match logs,2010-06-11,3,3,0,0,0,0,0,1
+WC-2010,T-03,Argentina,ARG,M-241,"Maradona, Diego",https://www.national-football-teams.com/coach/14124/Diego_Maradona.html,19,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-04,Australia,AUS,M-448,"Verbeek, Pim",https://www.national-football-teams.com/coach/55216/Pim_Verbeek.html,30,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-09,Brazil,BRA,M-108,"Dunga,",https://www.national-football-teams.com/coach/13640/Dunga.html,54,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-11,Cameroon,CMR,M-218,"Le Guen, Paul",https://www.national-football-teams.com/coach/14258/Paul_Le_Guen.html,15,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-13,Chile,CHL,M-043,"Bielsa, Marcelo",https://www.national-football-teams.com/coach/54589/Marcelo_Bielsa.html,42,National Football Teams coach match logs,2010-06-11,3,3,0,0,0,0,0,1
+WC-2010,T-22,Denmark,DNK,M-299,"Olsen, Morten",https://www.national-football-teams.com/coach/19455/Morten_Olsen.html,117,National Football Teams coach match logs,2010-06-11,4,3,1,0,0,0,0,1
+WC-2010,T-28,England,ENG,M-071,"Capello, Fabio",https://www.national-football-teams.com/coach/17367/Fabio_Capello.html,24,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-30,France,FRA,M-105,"Domenech, Raymond",https://www.national-football-teams.com/coach/18904/Raymond_Domenech.html,75,National Football Teams coach match logs,2010-06-11,7,3,1,1,1,0,1,1
+WC-2010,T-31,Germany,DEU,M-234,"Löw, Joachim",https://www.national-football-teams.com/coach/53246/Joachim_Low.html,49,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-32,Ghana,GHA,M-342,"Rajevac, Milovan",https://www.national-football-teams.com/coach/54582/Milovan_Rajevac.html,26,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-33,Greece,GRC,M-351,"Rehhagel, Otto",https://www.national-football-teams.com/coach/53482/Otto_Rehhagel.html,102,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-35,Honduras,HND,M-363,"Rueda, Reinaldo",https://www.national-football-teams.com/coach/53245/Reinaldo_Rueda.html,58,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-41,Italy,ITA,M-225,"Lippi, Marcello",https://www.national-football-teams.com/coach/55319/Marcello_Lippi.html,24,National Football Teams coach match logs,2010-06-11,7,3,1,1,1,0,1,1
+WC-2010,T-42,Ivory Coast,CIV,M-118,"Eriksson, Sven-Göran",https://www.national-football-teams.com/coach/53510/Sven_Goran_Eriksson.html,2,National Football Teams coach match logs,2010-06-11,10,6,2,2,0,0,0,2
+WC-2010,T-44,Japan,JPN,M-293,"Okada, Takeshi",https://www.national-football-teams.com/coach/20862/Takeshi_Okada.html,46,National Football Teams coach match logs,2010-06-11,3,3,0,0,0,0,0,1
+WC-2010,T-46,Mexico,MEX,M-006,"Aguirre, Javier",https://www.national-football-teams.com/coach/17322/Javier_Aguirre.html,28,National Football Teams coach match logs,2010-06-11,4,3,1,0,0,0,0,1
+WC-2010,T-48,Netherlands,NLD,M-446,"van Marwijk, Bert",https://www.national-football-teams.com/coach/20441/Bert_Van_Marwijk.html,21,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-49,New Zealand,NZL,M-162,"Herbert, Ricki",https://www.national-football-teams.com/coach/37223/Ricki_Herbert.html,32,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-50,Nigeria,NGA,M-212,"Lagerbäck, Lars",https://www.national-football-teams.com/coach/53279/Lars_Lagerback.html,4,National Football Teams coach match logs,2010-06-11,8,6,2,0,0,0,0,2
+WC-2010,T-51,North Korea,PRK,M-199,"Kim, Jong-Hun",https://www.national-football-teams.com/coach/53622/Jong_Hun_Kim.html,41,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-55,Paraguay,PRY,M-244,"Martino, Gerardo",https://www.national-football-teams.com/coach/21876/Gerardo_Martino.html,47,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-58,Portugal,PRT,M-339,"Queiroz, Carlos",https://www.national-football-teams.com/coach/53096/Carlos_Queiroz.html,22,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-66,Serbia,SRB,M-016,"Antić, Radomir",https://www.national-football-teams.com/coach/25958/Radomir_Antic.html,21,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-68,Slovakia,SVK,M-465,"Weiss, Vladimír",https://www.national-football-teams.com/coach/18067/Vladimir_Weiss.html,21,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-69,Slovenia,SVN,M-194,"Kek, Matjaž",https://www.national-football-teams.com/coach/26317/Matjaz_Kek.html,32,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-70,South Africa,ZAF,M-311,"Parreira, Carlos Alberto",https://www.national-football-teams.com/coach/53498/Carlos_Alberto_Parreira.html,34,National Football Teams coach match logs,2010-06-11,21,15,2,2,1,0,1,5
+WC-2010,T-71,South Korea,KOR,M-177,"Huh, Jung-Moo",https://www.national-football-teams.com/coach/20884/Jung_Moo_Huh.html,41,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-73,Spain,ESP,M-094,"del Bosque, Vicente",https://www.national-football-teams.com/coach/18325/Vicente_Del_Bosque.html,26,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-75,Switzerland,CHE,M-170,"Hitzfeld, Ottmar",https://www.national-football-teams.com/coach/53244/Ottmar_Hitzfeld.html,18,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-83,United States,USA,M-058,"Bradley, Bob",https://www.national-football-teams.com/coach/53177/Bob_Bradley.html,62,National Football Teams coach match logs,2010-06-11,0,0,0,0,0,0,0,0
+WC-2010,T-84,Uruguay,URY,M-419,"Tabárez, Óscar",https://www.national-football-teams.com/coach/52913/Oscar_Tabarez.html,49,National Football Teams coach match logs,2010-06-11,4,3,1,0,0,0,0,1
+WC-2014,T-01,Algeria,DZA,M-152,"Halilhodžić, Vahid",https://www.national-football-teams.com/coach/20020/Vahid_Halilhodzic.html,28,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-03,Argentina,ARG,M-367,"Sabella, Alejandro",https://www.national-football-teams.com/coach/37852/Alejandro_Sabella.html,33,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-04,Australia,AUS,M-331,"Postecoglou, Ange",https://www.national-football-teams.com/coach/21252/Ange_Postecoglou.html,4,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-06,Belgium,BEL,M-468,"Wilmots, Marc",https://www.national-football-teams.com/coach/12770/Marc_Wilmots.html,23,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-08,Bosnia and Herzegovina,BIH,M-416,"Sušić, Safet",https://www.national-football-teams.com/coach/19925/Safet_Susic.html,40,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-09,Brazil,BRA,M-389,"Scolari, Luiz Felipe",https://www.national-football-teams.com/coach/53259/Luiz_Felipe_Scolari.html,22,National Football Teams coach match logs,2014-06-12,14,6,2,2,2,1,1,2
+WC-2014,T-11,Cameroon,CMR,M-125,"Finke, Volker",https://www.national-football-teams.com/coach/53337/Volker_Finke.html,12,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-13,Chile,CHL,M-370,"Sampaoli, Jorge",https://www.national-football-teams.com/coach/53261/Jorge_Sampaoli.html,19,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-16,Colombia,COL,M-315,"Pekerman, José",https://www.national-football-teams.com/coach/52852/Jose_Pekerman.html,23,National Football Teams coach match logs,2014-06-12,5,3,1,1,0,0,0,1
+WC-2014,T-17,Costa Rica,CRI,M-326,"Pinto, Jorge Luis",https://www.national-football-teams.com/coach/52823/Jorge_Luis_Pinto.html,45,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-18,Croatia,HRV,M-206,"Kovač, Niko",https://www.national-football-teams.com/coach/1730/Niko_Kovac.html,5,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-25,Ecuador,ECU,M-363,"Rueda, Reinaldo",https://www.national-football-teams.com/coach/53245/Reinaldo_Rueda.html,45,National Football Teams coach match logs,2014-06-12,3,3,0,0,0,0,0,1
+WC-2014,T-28,England,ENG,M-173,"Hodgson, Roy",https://www.national-football-teams.com/coach/52912/Roy_Hodgson.html,28,National Football Teams coach match logs,2014-06-12,4,3,1,0,0,0,0,1
+WC-2014,T-30,France,FRA,M-097,"Deschamps, Didier",https://www.national-football-teams.com/coach/13953/Didier_Deschamps.html,22,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-31,Germany,DEU,M-234,"Löw, Joachim",https://www.national-football-teams.com/coach/53246/Joachim_Low.html,105,National Football Teams coach match logs,2014-06-12,7,3,1,1,1,1,0,1
+WC-2014,T-32,Ghana,GHA,M-017,"Appiah, James Kwesi",https://www.national-football-teams.com/coach/36092/James_Kwesi_Appiah.html,35,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-33,Greece,GRC,M-377,"Santos, Fernando",https://www.national-football-teams.com/coach/52909/Fernando_Santos.html,45,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-35,Honduras,HND,M-413,"Suárez, Luis Fernando",https://www.national-football-teams.com/coach/53113/Luis_Fernando_Suarez.html,48,National Football Teams coach match logs,2014-06-12,4,3,1,0,0,0,0,1
+WC-2014,T-38,Iran,IRN,M-339,"Queiroz, Carlos",https://www.national-football-teams.com/coach/53096/Carlos_Queiroz.html,40,National Football Teams coach match logs,2014-06-12,4,3,1,0,0,0,0,1
+WC-2014,T-41,Italy,ITA,M-334,"Prandelli, Cesare",https://www.national-football-teams.com/coach/52760/Cesare_Prandelli.html,53,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-42,Ivory Coast,CIV,M-213,"Lamouchi, Sabri",https://www.national-football-teams.com/coach/10687/Sabri_Lamouchi.html,24,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-44,Japan,JPN,M-473,"Zaccheroni, Alberto",https://www.national-football-teams.com/coach/52776/Alberto_Zaccheroni.html,51,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-46,Mexico,MEX,M-165,"Herrera, Miguel",https://www.national-football-teams.com/coach/14382/Miguel_Herrera.html,10,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-48,Netherlands,NLD,M-444,"van Gaal, Louis",https://www.national-football-teams.com/coach/53293/Louis_Van_Gaal.html,22,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-50,Nigeria,NGA,M-196,"Keshi, Stephen",https://www.national-football-teams.com/coach/14804/Stephen_Keshi.html,48,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-58,Portugal,PRT,M-036,"Bento, Paulo",https://www.national-football-teams.com/coach/17519/Paulo_Bento.html,43,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-62,Russia,RUS,M-071,"Capello, Fabio",https://www.national-football-teams.com/coach/17367/Fabio_Capello.html,19,National Football Teams coach match logs,2014-06-12,4,3,1,0,0,0,0,1
+WC-2014,T-71,South Korea,KOR,M-176,"Hong, Myung-Bo",https://www.national-football-teams.com/coach/13786/Myung_Bo_Hong.html,16,National Football Teams coach match logs,2014-06-12,0,0,0,0,0,0,0,0
+WC-2014,T-73,Spain,ESP,M-094,"del Bosque, Vicente",https://www.national-football-teams.com/coach/18325/Vicente_Del_Bosque.html,87,National Football Teams coach match logs,2014-06-12,7,3,1,1,1,0,1,1
+WC-2014,T-75,Switzerland,CHE,M-170,"Hitzfeld, Ottmar",https://www.national-football-teams.com/coach/53244/Ottmar_Hitzfeld.html,57,National Football Teams coach match logs,2014-06-12,3,3,0,0,0,0,0,1
+WC-2014,T-83,United States,USA,M-204,"Klinsmann, Jürgen",https://www.national-football-teams.com/coach/14094/Juergen_Klinsmann.html,47,National Football Teams coach match logs,2014-06-12,7,3,1,1,1,1,0,1
+WC-2014,T-84,Uruguay,URY,M-419,"Tabárez, Óscar",https://www.national-football-teams.com/coach/52913/Oscar_Tabarez.html,105,National Football Teams coach match logs,2014-06-12,11,6,2,1,1,1,0,2
+WC-2018,T-03,Argentina,ARG,M-370,"Sampaoli, Jorge",https://www.national-football-teams.com/coach/53261/Jorge_Sampaoli.html,11,National Football Teams coach match logs,2018-06-14,4,3,1,0,0,0,0,1
+WC-2018,T-04,Australia,AUS,M-446,"van Marwijk, Bert",https://www.national-football-teams.com/coach/20441/Bert_Van_Marwijk.html,4,National Football Teams coach match logs,2018-06-14,7,3,1,1,1,0,1,1
+WC-2018,T-06,Belgium,BEL,M-243,"Martínez, Roberto",https://www.national-football-teams.com/coach/65017/Roberto_Martinez_1.html,20,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-09,Brazil,BRA,M-429,"Tite,",https://www.national-football-teams.com/coach/65012/Tite_1.html,21,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-16,Colombia,COL,M-315,"Pekerman, José",https://www.national-football-teams.com/coach/52852/Jose_Pekerman.html,74,National Football Teams coach match logs,2018-06-14,10,6,2,2,0,0,0,2
+WC-2018,T-17,Costa Rica,CRI,M-343,"Ramírez, Óscar",https://www.national-football-teams.com/coach/16644/Oscar_Ramirez.html,44,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-18,Croatia,HRV,M-090,"Dalić, Zlatko",https://www.national-football-teams.com/coach/69144/Zlatko_Dalic.html,7,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-22,Denmark,DNK,M-158,"Hareide, Åge",https://www.national-football-teams.com/coach/20561/Aage_Hareide.html,22,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-26,Egypt,EGY,M-088,"Cúper, Héctor",https://www.national-football-teams.com/coach/37846/Hector_Cuper.html,35,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-28,England,ENG,M-405,"Southgate, Gareth",https://www.national-football-teams.com/coach/2161/Gareth_Southgate.html,18,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-30,France,FRA,M-097,"Deschamps, Didier",https://www.national-football-teams.com/coach/13953/Didier_Deschamps.html,74,National Football Teams coach match logs,2018-06-14,5,3,1,1,0,0,0,1
+WC-2018,T-31,Germany,DEU,M-234,"Löw, Joachim",https://www.national-football-teams.com/coach/53246/Joachim_Low.html,161,National Football Teams coach match logs,2018-06-14,14,6,2,2,2,1,1,2
+WC-2018,T-37,Iceland,ISL,M-153,"Hallgrímsson, Heimir",https://www.national-football-teams.com/coach/65046/Heimir_Hallgrimsson.html,22,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-38,Iran,IRN,M-339,"Queiroz, Carlos",https://www.national-football-teams.com/coach/53096/Carlos_Queiroz.html,86,National Football Teams coach match logs,2018-06-14,7,6,1,0,0,0,0,2
+WC-2018,T-44,Japan,JPN,M-289,"Nishino, Akira",https://www.national-football-teams.com/coach/36690/Akira_Nishino.html,2,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-46,Mexico,MEX,M-304,"Osorio, Juan Carlos",https://www.national-football-teams.com/coach/61331/Juan_Carlos_Osorio.html,46,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-47,Morocco,MAR,M-353,"Renard, Hervé",https://www.national-football-teams.com/coach/52812/Herve_Renard.html,29,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-50,Nigeria,NGA,M-359,"Rohr, Gernot",https://www.national-football-teams.com/coach/52921/Gernot_Rohr.html,13,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-54,Panama,PAN,M-141,"Gómez, Hernán Darío",https://www.national-football-teams.com/coach/54656/Hernan_Dario_Gomez.html,68,National Football Teams coach match logs,2018-06-14,6,6,0,0,0,0,0,2
+WC-2018,T-56,Peru,PER,M-134,"Gareca, Ricardo",https://www.national-football-teams.com/coach/21648/Ricardo_Gareca.html,43,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-57,Poland,POL,M-283,"Nawałka, Adam",https://www.national-football-teams.com/coach/17494/Adam_Nawalka.html,45,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-58,Portugal,PRT,M-377,"Santos, Fernando",https://www.national-football-teams.com/coach/52909/Fernando_Santos.html,51,National Football Teams coach match logs,2018-06-14,4,3,1,0,0,0,0,1
+WC-2018,T-62,Russia,RUS,M-078,"Cherchesov, Stanislav",https://www.national-football-teams.com/coach/15106/Stanislav_Cherchesov.html,20,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-63,Saudi Arabia,SAU,M-329,"Pizzi, Juan Antonio",https://www.national-football-teams.com/coach/12594/Juan_Antonio_Pizzi.html,9,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-65,Senegal,SEN,M-081,"Cissé, Aliou",https://www.national-football-teams.com/coach/5818/Aliou_Cisse.html,43,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-66,Serbia,SRB,M-208,"Krstajić, Mladen",https://www.national-football-teams.com/coach/5856/Mladen_Krstajic.html,4,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-71,South Korea,KOR,M-395,"Shin, Tae-Yong",https://www.national-football-teams.com/coach/17653/Tae_Yong_Shin.html,18,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-73,Spain,ESP,M-169,"Hierro, Fernando",https://www.national-football-teams.com/coach/10386/Fernando_Hierro.html,0,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-74,Sweden,SWE,M-014,"Andersson, Janne",https://www.national-football-teams.com/coach/65052/Janne_Andersson.html,23,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-75,Switzerland,CHE,M-319,"Petković, Vladimir",https://www.national-football-teams.com/coach/57018/Vladimir_Petkovic.html,39,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-79,Tunisia,TUN,M-238,"Maâloul, Nabil",https://www.national-football-teams.com/coach/46472/Nabil_Maaloul.html,10,National Football Teams coach match logs,2018-06-14,0,0,0,0,0,0,0,0
+WC-2018,T-84,Uruguay,URY,M-419,"Tabárez, Óscar",https://www.national-football-teams.com/coach/52913/Oscar_Tabarez.html,152,National Football Teams coach match logs,2018-06-14,15,9,3,1,1,1,0,3
+WC-2022,T-03,Argentina,ARG,M-383,"Scaloni, Lionel",https://www.national-football-teams.com/coach/320/Lionel_Scaloni.html,50,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-04,Australia,AUS,M-022,"Arnold, Graham",https://www.national-football-teams.com/coach/12792/Graham_Arnold.html,32,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-06,Belgium,BEL,M-243,"Martínez, Roberto",https://www.national-football-teams.com/coach/65017/Roberto_Martinez_1.html,76,National Football Teams coach match logs,2022-11-20,7,3,1,1,1,1,0,1
+WC-2022,T-09,Brazil,BRA,M-429,"Tite,",https://www.national-football-teams.com/coach/65012/Tite_1.html,76,National Football Teams coach match logs,2022-11-20,5,3,1,1,0,0,0,1
+WC-2022,T-11,Cameroon,CMR,M-402,"Song, Rigobert",https://www.national-football-teams.com/coach/1237/Rigobert_Song.html,7,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-12,Canada,CAN,M-163,"Herdman, John",https://www.national-football-teams.com/coach/70828/John_Herdman.html,48,National Football Teams coach match logs,2022-11-20,11,9,1,1,0,0,0,3
+WC-2022,T-17,Costa Rica,CRI,M-413,"Suárez, Luis Fernando",https://www.national-football-teams.com/coach/53113/Luis_Fernando_Suarez.html,25,National Football Teams coach match logs,2022-11-20,7,6,1,0,0,0,0,2
+WC-2022,T-18,Croatia,HRV,M-090,"Dalić, Zlatko",https://www.national-football-teams.com/coach/69144/Zlatko_Dalic.html,63,National Football Teams coach match logs,2022-11-20,7,3,1,1,1,0,1,1
+WC-2022,T-22,Denmark,DNK,M-171,"Hjulmand, Kasper",https://www.national-football-teams.com/coach/79256/Kasper_Hjulmand.html,33,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-25,Ecuador,ECU,M-011,"Alfaro, Gustavo",https://www.national-football-teams.com/coach/79725/Gustavo_Alfaro.html,32,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-28,England,ENG,M-405,"Southgate, Gareth",https://www.national-football-teams.com/coach/2161/Gareth_Southgate.html,76,National Football Teams coach match logs,2022-11-20,7,3,1,1,1,1,0,1
+WC-2022,T-30,France,FRA,M-097,"Deschamps, Didier",https://www.national-football-teams.com/coach/13953/Didier_Deschamps.html,129,National Football Teams coach match logs,2022-11-20,12,6,2,2,1,0,1,2
+WC-2022,T-31,Germany,DEU,M-127,"Flick, Hansi",https://www.national-football-teams.com/coach/83623/Hansi_Flick.html,16,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-32,Ghana,GHA,M-002,"Addo, Otto",https://www.national-football-teams.com/coach/10503/Otto_Addo.html,9,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-38,Iran,IRN,M-339,"Queiroz, Carlos",https://www.national-football-teams.com/coach/53096/Carlos_Queiroz.html,4,National Football Teams coach match logs,2022-11-20,10,9,1,0,0,0,0,3
+WC-2022,T-44,Japan,JPN,M-273,"Moriyasu, Hajime",https://www.national-football-teams.com/coach/15559/Hajime_Moriyasu.html,58,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-46,Mexico,MEX,M-244,"Martino, Gerardo",https://www.national-football-teams.com/coach/21876/Gerardo_Martino.html,59,National Football Teams coach match logs,2022-11-20,5,3,1,1,0,0,0,1
+WC-2022,T-47,Morocco,MAR,M-350,"Regragui, Walid",https://www.national-football-teams.com/coach/4501/Walid_Regragui.html,3,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-48,Netherlands,NLD,M-444,"van Gaal, Louis",https://www.national-football-teams.com/coach/53293/Louis_Van_Gaal.html,14,National Football Teams coach match logs,2022-11-20,7,3,1,1,1,1,0,1
+WC-2022,T-57,Poland,POL,M-261,"Michniewicz, Czesław",https://www.national-football-teams.com/coach/86936/Czeslaw_Michniewicz.html,9,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-58,Portugal,PRT,M-377,"Santos, Fernando",https://www.national-football-teams.com/coach/52909/Fernando_Santos.html,104,National Football Teams coach match logs,2022-11-20,8,6,2,0,0,0,0,2
+WC-2022,T-59,Qatar,QAT,M-373,"Sánchez, Félix",https://www.national-football-teams.com/coach/68664/Felix_Sanchez.html,83,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-63,Saudi Arabia,SAU,M-353,"Renard, Hervé",https://www.national-football-teams.com/coach/52812/Herve_Renard.html,37,National Football Teams coach match logs,2022-11-20,3,3,0,0,0,0,0,1
+WC-2022,T-65,Senegal,SEN,M-081,"Cissé, Aliou",https://www.national-football-teams.com/coach/5818/Aliou_Cisse.html,89,National Football Teams coach match logs,2022-11-20,3,3,0,0,0,0,0,1
+WC-2022,T-66,Serbia,SRB,M-411,"Stojković, Dragan",https://www.national-football-teams.com/coach/13981/Dragan_Stojkovic.html,21,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-71,South Korea,KOR,M-036,"Bento, Paulo",https://www.national-football-teams.com/coach/17519/Paulo_Bento.html,53,National Football Teams coach match logs,2022-11-20,3,3,0,0,0,0,0,1
+WC-2022,T-73,Spain,ESP,M-116,"Luis Enrique,",https://www.national-football-teams.com/coach/14107/Luis_Enrique.html,41,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-75,Switzerland,CHE,M-471,"Yakın, Murat",https://www.national-football-teams.com/coach/6423/Murat_Yakin.html,16,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-79,Tunisia,TUN,M-190,"Kadri, Jalel",https://www.national-football-teams.com/coach/85462/Jalel_Kadri.html,10,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-83,United States,USA,M-039,"Berhalter, Gregg",https://www.national-football-teams.com/coach/7106/Gregg_Berhalter.html,56,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-84,Uruguay,URY,M-012,"Alonso, Diego",https://www.national-football-teams.com/coach/10800/Diego_Alonso.html,9,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2022,T-85,Wales,WAL,M-306,"Page, Robert",https://www.national-football-teams.com/coach/7276/Robert_Page.html,28,National Football Teams coach match logs,2022-11-20,0,0,0,0,0,0,0,0
+WC-2026,T-01,Algeria,DZA,NA,"Petković, Vladimir",https://www.national-football-teams.com/coach/57018/Vladimir_Petkovic.html,27,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-03,Argentina,ARG,NA,"Scaloni, Lionel",https://www.national-football-teams.com/coach/320/Lionel_Scaloni.html,94,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-04,Australia,AUS,NA,"Popović, Tony",https://www.national-football-teams.com/coach/427/Tony_Popovic.html,16,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-05,Austria,AUT,NA,"Rangnick, Ralf",https://www.national-football-teams.com/coach/87679/Ralf_Rangnick.html,44,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-06,Belgium,BEL,NA,"Garcia, Rudi",https://www.national-football-teams.com/coach/98752/Rudi_Garcia.html,12,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-08,Bosnia and Herzegovina,BIH,NA,"Barbarez, Sergej",https://www.national-football-teams.com/coach/924/Sergej_Barbarez.html,20,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-09,Brazil,BRA,NA,"Ancelotti, Carlo",https://www.national-football-teams.com/coach/15221/Carlo_Ancelotti.html,10,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,NA,Cabo Verde,CPV,NA,"Bubista,",https://www.national-football-teams.com/coach/1313/Bubista.html,59,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-12,Canada,CAN,NA,"Marsch, Jesse",https://www.national-football-teams.com/coach/11451/Jesse_Marsch.html,30,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-16,Colombia,COL,NA,"Lorenzo, Néstor",https://www.national-football-teams.com/coach/19307/Nestor_Lorenzo.html,44,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,NA,Congo DR,COD,NA,"Desabre, Sébastien",https://www.national-football-teams.com/coach/69945/Sebastien_Desabre.html,46,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-18,Croatia,HRV,NA,"Dalić, Zlatko",https://www.national-football-teams.com/coach/69144/Zlatko_Dalic.html,105,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,NA,Curacao,CUW,NA,"Rutten, Fred",https://www.national-football-teams.com/coach/20386/Fred_Rutten.html,2,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-20,Czechia,CZE,NA,"Koubek, Miroslav",https://www.national-football-teams.com/coach/103829/Miroslav_Koubek.html,2,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-25,Ecuador,ECU,NA,"Beccacece, Sebastián",https://www.national-football-teams.com/coach/95693/Sebastian_Beccacece.html,18,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-26,Egypt,EGY,NA,"Hassan, Hossam",https://www.national-football-teams.com/coach/12994/Hossam_Hassan.html,28,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-28,England,ENG,NA,"Tuchel, Thomas",https://www.national-football-teams.com/coach/98836/Thomas_Tuchel.html,12,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-30,France,FRA,NA,"Deschamps, Didier",https://www.national-football-teams.com/coach/13953/Didier_Deschamps.html,174,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-31,Germany,DEU,NA,"Nagelsmann, Julian",https://www.national-football-teams.com/coach/92631/Julian_Nagelsmann.html,31,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-32,Ghana,GHA,NA,"Addo, Otto",https://www.national-football-teams.com/coach/10503/Otto_Addo.html,34,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-34,Haiti,HTI,NA,"Migné, Sébastien",https://www.national-football-teams.com/coach/67660/Sebastien_Migne.html,22,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-38,Iran,IRN,NA,"Ghalenoei, Amir",https://www.national-football-teams.com/coach/15348/Amir_Ghalenoei.html,43,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-39,Iraq,IRQ,NA,"Arnold, Graham",https://www.national-football-teams.com/coach/12792/Graham_Arnold.html,12,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-42,Ivory Coast,CIV,NA,"Faé, Emerse",https://www.national-football-teams.com/coach/10966/Emerse_Fae.html,31,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-44,Japan,JPN,NA,"Moriyasu, Hajime",https://www.national-football-teams.com/coach/15559/Hajime_Moriyasu.html,103,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,NA,Jordan,JOR,NA,"Sellami, Jamel",https://www.national-football-teams.com/coach/15123/Jamel_Sellami.html,29,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-46,Mexico,MEX,NA,"Aguirre, Javier",https://www.national-football-teams.com/coach/17322/Javier_Aguirre.html,26,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-47,Morocco,MAR,NA,"Regragui, Walid",https://www.national-football-teams.com/coach/4501/Walid_Regragui.html,49,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-48,Netherlands,NLD,NA,"Koeman, Ronald",https://www.national-football-teams.com/coach/14122/Ronald_Koeman.html,38,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-49,New Zealand,NZL,NA,"Bazeley, Darren",https://www.national-football-teams.com/coach/90441/Darren_Bazeley.html,32,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-53,Norway,NOR,NA,"Solbakken, Ståle",https://www.national-football-teams.com/coach/14061/Staale_Solbakken.html,54,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-54,Panama,PAN,NA,"Christiansen, Thomas",https://www.national-football-teams.com/coach/10511/Thomas_Christiansen.html,89,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-55,Paraguay,PRY,NA,"Alfaro, Gustavo",https://www.national-football-teams.com/coach/79725/Gustavo_Alfaro.html,19,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-58,Portugal,PRT,NA,"Martínez, Roberto",https://www.national-football-teams.com/coach/65017/Roberto_Martinez_1.html,38,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-59,Qatar,QAT,NA,NA,NA,NA,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-63,Saudi Arabia,SAU,NA,"Renard, Hervé",https://www.national-football-teams.com/coach/52812/Herve_Renard.html,71,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-64,Scotland,SCO,NA,"Clarke, Stevie",https://www.national-football-teams.com/coach/20016/Stevie_Clarke.html,76,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-65,Senegal,SEN,NA,"Thiaw, Pape",https://www.national-football-teams.com/coach/5797/Pape_Thiaw.html,37,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-70,South Africa,ZAF,NA,"Broos, Hugo",https://www.national-football-teams.com/coach/19303/Hugo_Broos.html,55,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-71,South Korea,KOR,NA,"Hong, Myung-Bo",https://www.national-football-teams.com/coach/13786/Myung_Bo_Hong.html,21,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-73,Spain,ESP,NA,"de La Fuente, Luis",https://www.national-football-teams.com/coach/83296/Luis_De_La_Fuente_1.html,40,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-74,Sweden,SWE,NA,"Potter, Graham",https://www.national-football-teams.com/coach/101706/Graham_Potter.html,4,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-75,Switzerland,CHE,NA,"Yakın, Murat",https://www.national-football-teams.com/coach/6423/Murat_Yakin.html,57,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-79,Tunisia,TUN,NA,"Trabelsi, Sami",https://www.national-football-teams.com/coach/30024/Sami_Trabelsi.html,19,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-80,Turkey,TUR,NA,"Montella, Vincenzo",https://www.national-football-teams.com/coach/3356/Vincenzo_Montella.html,31,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-83,United States,USA,NA,"Pochettino, Mauricio",https://www.national-football-teams.com/coach/302/Mauricio_Pochettino.html,24,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,T-84,Uruguay,URY,NA,"Bielsa, Marcelo",https://www.national-football-teams.com/coach/54589/Marcelo_Bielsa.html,34,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
+WC-2026,NA,Uzbekistan,UZB,NA,"Cannavaro, Fabio",https://www.national-football-teams.com/coach/3372/Fabio_Cannavaro.html,6,National Football Teams coach match logs,2026-06-11,0,0,0,0,0,0,0,0
