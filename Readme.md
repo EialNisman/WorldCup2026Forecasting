@@ -4,13 +4,19 @@ WC2026Forecast is an R notebook project for building a 2026 FIFA World Cup forec
 
 ## Project Structure
 
-- `0.Project_Index.ipynb` - project table of contents and recommended notebook order.
-- `1.DataCleaning-R/` - notebooks that create model inputs and save reusable RDS/CSV artifacts.
-- `1.DataCleaning-R/Data/RDS/` - saved intermediate datasets used across notebooks.
-- `1.DataCleaning-R/Data/CSV/` - inspection-friendly source/intermediate CSV files.
-- `2.Model_Selection-R/` - exploratory modeling and relationship checks.
+
 
 ## Suggested Notebook Order
+
+``text
+WC2026Forecast/
+├── 1.DatCleaning-R/
+│   ├── Data/
+    ├──── RDS
+    ├──── CSV
+│   ├──── 
+│   
+```
 
 1. `1.DataCleaning-R/WorldCups.ipynb`
 2. `1.DataCleaning-R/Rosters.ipynb`
@@ -45,3 +51,5 @@ Eial Nisman - Statistics and Economics student at NC State University.
 
 - Email: eiunisman@gmail.com
 - LinkedIn: www.linkedin.com/in/eialnisman
+
+Feel free to reach out if there's anything about the project you'd like to chat about 😊 

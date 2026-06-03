@@ -1,0 +1,9 @@
+"term","estimate"
+"(Intercept)",37.3527298801595
+"ELO_diff",0.00168965870415242
+"opp_prior_world_cups_coached",0.0784772845095249
+"opp_players_with_multiple_prior_wcs",0.0339379668675031
+"I(avg_age^2)",-0.0018567393809189
+"opp_avg_age",-2.66002430745583
+"I(opp_avg_age^2)",0.0494388519095898
+"distance_from_host_km",-2.11417818206544e-05

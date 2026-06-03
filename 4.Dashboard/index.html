@@ -1,0 +1,1231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>World Cup 2026 Forecast Bracket Preview</title>
+  <style>
+    :root {
+      --ink: #18212f;
+      --muted: #647083;
+      --line: #d8dee8;
+      --paper: #f7f8f4;
+      --panel: #ffffff;
+      --green: #0f8a60;
+      --red: #c94636;
+      --gold: #d9a12e;
+      --blue: #2f6fae;
+      --shadow: 0 16px 36px rgba(31, 42, 55, .12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(120deg, rgba(15, 138, 96, .10), transparent 30%),
+        linear-gradient(250deg, rgba(201, 70, 54, .12), transparent 35%),
+        var(--paper);
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(247, 248, 244, .86);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 250px;
+    }
+
+    h1 {
+      font-size: 24px;
+      line-height: 1.05;
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .step.active {
+      border-color: var(--green);
+      color: var(--green);
+      box-shadow: 0 0 0 3px rgba(15, 138, 96, .12);
+    }
+
+    main {
+      max-width: 1480px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 22px 56px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 12px;
+      flex: 1;
+      min-width: min(720px, 100%);
+    }
+
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 70px;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .primary, .secondary {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      min-height: 40px;
+      padding: 0 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .primary {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .primary:disabled {
+      cursor: not-allowed;
+      opacity: .45;
+    }
+
+    .secondary {
+      background: #fff;
+      border-color: var(--line);
+    }
+
+    .groups-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .group-card, .round-panel, .champion-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(31, 42, 55, .06);
+      overflow: hidden;
+    }
+
+    .group-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(15, 138, 96, .08), rgba(217, 161, 46, .08));
+    }
+
+    .group-head h2, .round-panel h2, .champion-panel h2 {
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: 0;
+    }
+
+    .teams {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .team-pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 12px;
+      background: #fff;
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    th, td {
+      padding: 7px 8px;
+      text-align: left;
+      border-bottom: 1px solid #edf0f4;
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .rank {
+      width: 26px;
+      color: var(--muted);
+    }
+
+    .advancing {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .matches {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+    }
+
+    .match-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 74px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+    }
+
+    .match-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(15, 138, 96, .45);
+      box-shadow: 0 8px 18px rgba(15, 138, 96, .10);
+    }
+
+    .team-side {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .team-side.right {
+      text-align: right;
+    }
+
+    .team-name {
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pick-label {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .scoreline {
+      display: grid;
+      justify-items: center;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      min-width: 58px;
+    }
+
+    .scoreline strong {
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    .picked {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .knockout {
+      display: none;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .knockout.show {
+      display: grid;
+    }
+
+    .rounds {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(220px, 1fr));
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .round-panel {
+      min-width: 220px;
+    }
+
+    .round-panel h2 {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .round-panel .matches {
+      min-height: 120px;
+    }
+
+    .ko-match {
+      grid-template-columns: 1fr;
+      gap: 7px;
+      min-height: 96px;
+    }
+
+    .ko-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border: 1px solid #edf0f4;
+      border-radius: 8px;
+      padding: 9px 10px;
+      background: #fbfcfd;
+    }
+
+    .ko-row.selected {
+      border-color: var(--green);
+      background: rgba(15, 138, 96, .08);
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .champion-panel {
+      padding: 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      background: linear-gradient(120deg, rgba(217, 161, 46, .18), #fff 48%, rgba(47, 111, 174, .12));
+    }
+
+    .champion-name {
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1;
+      margin-top: 8px;
+    }
+
+    .source {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    dialog {
+      border: 0;
+      border-radius: 8px;
+      padding: 0;
+      width: min(620px, calc(100vw - 32px));
+      box-shadow: var(--shadow);
+    }
+
+    dialog::backdrop {
+      background: rgba(24, 33, 47, .45);
+    }
+
+    .modal {
+      background: #fff;
+      padding: 0;
+    }
+
+    .modal-head {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .modal-head h2 {
+      margin: 0 0 4px;
+      font-size: 20px;
+    }
+
+    .close {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .projection {
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .projected-score {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .big-team {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfcfd;
+      display: grid;
+      gap: 10px;
+    }
+
+    .big-team b {
+      font-size: 18px;
+    }
+
+    .big-score {
+      font-size: 40px;
+      font-weight: 900;
+      min-width: 74px;
+      text-align: center;
+    }
+
+    .prob-bar {
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      background: #edf0f4;
+    }
+
+    .prob-a { background: var(--green); }
+    .prob-d { background: var(--gold); }
+    .prob-b { background: var(--blue); }
+
+    .choice-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .choice-row.two-choice {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .score-odds {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fbfcfd;
+    }
+
+    .score-odds-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+    }
+
+    .score-cell {
+      border: 0;
+      background: #fff;
+      padding: 10px 8px;
+      display: grid;
+      gap: 3px;
+      min-height: 58px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .score-cell strong {
+      font-size: 15px;
+    }
+
+    .score-cell span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .score-cell.featured {
+      background: rgba(217, 161, 46, .16);
+    }
+
+    .score-cell.selected {
+      outline: 2px solid var(--green);
+      outline-offset: -2px;
+    }
+
+    .choice {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      cursor: pointer;
+      min-height: 54px;
+      text-align: left;
+      font-weight: 800;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .choice:hover, .choice.selected {
+      border-color: var(--green);
+      background: rgba(15, 138, 96, .08);
+      color: var(--green);
+    }
+
+    .choice.draw:hover, .choice.draw.selected {
+      border-color: var(--gold);
+      background: rgba(217, 161, 46, .16);
+      color: #9a6a10;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1100px) {
+      .groups-grid { grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .progress { justify-content: flex-start; }
+    }
+
+    @media (max-width: 720px) {
+      main { padding: 16px 12px 36px; }
+      .topbar { padding: 14px 12px; }
+      .groups-grid { grid-template-columns: 1fr; }
+      .metric-row { grid-template-columns: repeat(2, 1fr); }
+      .projected-score { grid-template-columns: 1fr; }
+      .big-score { font-size: 30px; }
+      .score-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .choice-row { grid-template-columns: 1fr; }
+      .champion-panel { align-items: flex-start; flex-direction: column; }
+      .champion-name { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="topbar">
+        <div class="brand">
+          <h1>World Cup Forecast Builder</h1>
+          <span class="subtle">Interactive preview: groups, projections, picks, bracket path</span>
+        </div>
+        <nav class="progress" aria-label="Tournament progress">
+          <span class="step active" id="step-groups">Group stage</span>
+          <span class="step" id="step-r32">Round of 32</span>
+          <span class="step" id="step-r16">Round of 16</span>
+          <span class="step" id="step-qf">Quarter-finals</span>
+          <span class="step" id="step-sf">Semi-finals</span>
+          <span class="step" id="step-final">Final</span>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="toolbar" aria-label="Dashboard controls">
+        <div class="metric-row">
+          <div class="metric"><b id="picked-count">0 / 72</b><span>Group results completed</span></div>
+          <div class="metric"><b id="qualified-count">0</b><span>Teams currently advancing</span></div>
+          <div class="metric"><b id="current-round">Groups</b><span>Active decision layer</span></div>
+          <div class="metric"><b id="champion-metric">TBD</b><span>Projected champion</span></div>
+        </div>
+        <div class="actions">
+          <button class="secondary" id="auto-pick">Auto-fill projections</button>
+          <button class="secondary" id="reset">Reset picks</button>
+          <button class="primary" id="build-bracket" disabled>Build knockout bracket</button>
+        </div>
+      </section>
+
+      <section id="groups-view" class="groups-grid" aria-label="Group stage"></section>
+
+      <section id="knockout-view" class="knockout" aria-label="Knockout rounds">
+        <div class="champion-panel">
+          <div>
+            <h2>Champion path</h2>
+            <div class="champion-name" id="champion-name">Choose the final winner</div>
+          </div>
+          <button class="secondary" id="back-to-groups">Back to groups</button>
+        </div>
+        <div class="rounds" id="rounds"></div>
+      </section>
+
+      <p class="source">Fixture/group data follows public 2026 World Cup listings from FIFA and Euronews; projection scores load from the local WC 2026 forecast JSON.</p>
+    </main>
+  </div>
+
+  <dialog id="match-dialog">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="modal-title">Match projection</h2>
+          <div class="subtle" id="modal-subtitle"></div>
+        </div>
+        <button class="close" id="close-dialog" aria-label="Close">×</button>
+      </div>
+      <div class="projection">
+        <div class="projected-score">
+          <div class="big-team">
+            <b id="modal-team-a"></b>
+            <span class="hint" id="modal-a-note"></span>
+          </div>
+          <div class="big-score" id="modal-score"></div>
+          <div class="big-team">
+            <b id="modal-team-b"></b>
+            <span class="hint" id="modal-b-note"></span>
+          </div>
+        </div>
+        <div class="prob-bar" aria-label="Win probability bar">
+          <span class="prob-a" id="prob-a"></span>
+          <span class="prob-d" id="prob-d"></span>
+          <span class="prob-b" id="prob-b"></span>
+        </div>
+        <div class="hint" id="modal-prob-text"></div>
+        <div class="score-odds" aria-label="Exact score odds">
+          <div class="score-odds-head">
+            <span>Exact score odds</span>
+            <span class="subtle">10 most likely scores</span>
+          </div>
+          <div class="score-grid" id="score-grid"></div>
+        </div>
+        <div class="choice-row">
+          <button class="choice" id="choose-a"></button>
+          <button class="choice draw" id="choose-draw">Pick draw</button>
+          <button class="choice" id="choose-b"></button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const groups = {
+      A: ["Mexico", "South Africa", "Korea Republic", "Czechia"],
+      B: ["Canada", "Bosnia and Herzegovina", "Qatar", "Switzerland"],
+      C: ["Brazil", "Morocco", "Haiti", "Scotland"],
+      D: ["United States", "Paraguay", "Australia", "Turkiye"],
+      E: ["Germany", "Curacao", "Cote d'Ivoire", "Ecuador"],
+      F: ["Netherlands", "Japan", "Sweden", "Tunisia"],
+      G: ["Belgium", "Egypt", "IR Iran", "New Zealand"],
+      H: ["Spain", "Cabo Verde", "Saudi Arabia", "Uruguay"],
+      I: ["France", "Senegal", "Iraq", "Norway"],
+      J: ["Argentina", "Algeria", "Austria", "Jordan"],
+      K: ["Portugal", "Congo DR", "Uzbekistan", "Colombia"],
+      L: ["England", "Croatia", "Ghana", "Panama"]
+    };
+
+    const ratings = {
+      Argentina: 95, France: 94, Spain: 92, Brazil: 91, England: 90, Portugal: 89,
+      Germany: 88, Netherlands: 87, Belgium: 85, Uruguay: 84, Croatia: 83, Colombia: 82,
+      Switzerland: 80, Morocco: 79, Japan: 78, "United States": 77, Mexico: 76, Senegal: 75,
+      Austria: 74, Scotland: 72, Sweden: 71, Ecuador: 70, "Cote d'Ivoire": 69, "Korea Republic": 68,
+      Australia: 67, Turkiye: 66, Paraguay: 65, Canada: 64, Czechia: 63, Tunisia: 62, Egypt: 61,
+      Algeria: 60, "Saudi Arabia": 59, Qatar: 58, "Bosnia and Herzegovina": 57, Ghana: 56,
+      "IR Iran": 55, "South Africa": 54, Panama: 53, Norway: 52, Uzbekistan: 51, Jordan: 50,
+      Iraq: 49, "Congo DR": 48, "Cabo Verde": 47, "New Zealand": 46, Curacao: 45, Haiti: 44
+    };
+
+    const fixtureDates = {
+      A: ["Jun 11", "Jun 12", "Jun 18", "Jun 19", "Jun 25", "Jun 25"],
+      B: ["Jun 12", "Jun 13", "Jun 18", "Jun 19", "Jun 24", "Jun 24"],
+      C: ["Jun 14", "Jun 14", "Jun 20", "Jun 20", "Jun 25", "Jun 25"],
+      D: ["Jun 13", "Jun 14", "Jun 19", "Jun 20", "Jun 26", "Jun 26"],
+      E: ["Jun 14", "Jun 15", "Jun 20", "Jun 21", "Jun 25", "Jun 25"],
+      F: ["Jun 14", "Jun 15", "Jun 20", "Jun 21", "Jun 26", "Jun 26"],
+      G: ["Jun 15", "Jun 16", "Jun 21", "Jun 22", "Jun 27", "Jun 27"],
+      H: ["Jun 15", "Jun 16", "Jun 21", "Jun 22", "Jun 27", "Jun 27"],
+      I: ["Jun 16", "Jun 17", "Jun 22", "Jun 23", "Jun 26", "Jun 26"],
+      J: ["Jun 17", "Jun 17", "Jun 22", "Jun 23", "Jun 28", "Jun 28"],
+      K: ["Jun 17", "Jun 18", "Jun 23", "Jun 24", "Jun 28", "Jun 28"],
+      L: ["Jun 17", "Jun 18", "Jun 23", "Jun 24", "Jun 27", "Jun 27"]
+    };
+
+    const projectionIndex = {};
+    let projectionsLoaded = false;
+
+    const pairOrder = [[0,1], [2,3], [3,1], [0,2], [1,2], [3,0]];
+    const matches = Object.entries(groups).flatMap(([group, teams]) =>
+      pairOrder.map(([a, b], index) => makeMatch(group, index, teams[a], teams[b]))
+    );
+
+    const state = {
+      picks: {},
+      koPicks: {},
+      activeMatch: null,
+      activeMode: "",
+      rounds: [],
+      bracketBuilt: false
+    };
+
+    const groupsView = document.getElementById("groups-view");
+    const knockoutView = document.getElementById("knockout-view");
+    const roundsEl = document.getElementById("rounds");
+    const dialog = document.getElementById("match-dialog");
+
+    function makeMatch(group, index, a, b) {
+      const projection = projectionFor(a, b, group.charCodeAt(0) + index);
+      return {
+        id: `${group}-${index}`,
+        group,
+        date: fixtureDates[group][index],
+        a,
+        b,
+        projection
+      };
+    }
+
+    function loadPredictionJson(data) {
+      data.matches.forEach(match => {
+        projectionIndex[projectionKey(match.team1_name, match.team2_name)] = match;
+      });
+      projectionsLoaded = true;
+      matches.forEach(match => {
+        match.projection = projectionFor(match.a, match.b, match.group.charCodeAt(0));
+      });
+      render();
+    }
+
+    async function loadProjectionJson() {
+      try {
+        const response = await fetch("./wc2026_predictions.json");
+        const data = await response.json();
+        loadPredictionJson(data);
+      } catch (error) {
+        console.error("Failed to load prediction data:", error);
+      }
+    }
+
+    function projectionFor(a, b, seed) {
+      const row = projectionIndex[projectionKey(a, b)];
+      return row ? hydrateProjection(row, a, b) : null;
+    }
+
+    function projectionKey(a, b) {
+      return [normalizeTeam(a), normalizeTeam(b)].sort().join("__");
+    }
+
+    function normalizeTeam(team) {
+      const aliases = {
+        "cote d'ivoire": "ivory coast",
+        "ir iran": "iran",
+        "korea republic": "south korea",
+        "turkiye": "turkey"
+      };
+      const normalized = team.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const aliased = aliases[normalized] || normalized;
+      return aliased.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function hydrateProjection(row, a, b) {
+      const sameOrder = normalizeTeam(row.team1_name) === normalizeTeam(a);
+      const scores = row.top_scores.map(item => ({
+        score: sameOrder ? item.score : `${item.team2_goals}-${item.team1_goals}`,
+        probability: item.probability * 100
+      })).sort((x, y) => y.probability - x.probability);
+      const top = scores[0] || { score: "1-1", probability: 0 };
+      const [goalsA, goalsB] = top.score.split("-").map(Number);
+      return {
+        goalsA,
+        goalsB,
+        aProb: (sameOrder ? row.winteam1_prob : row.winteam2_prob) * 100,
+        drawProb: row.tie_prob * 100,
+        bProb: (sameOrder ? row.winteam2_prob : row.winteam1_prob) * 100,
+        scoreOdds: scores
+      };
+    }
+
+    function render() {
+      groupsView.innerHTML = Object.keys(groups).map(group => renderGroup(group)).join("");
+      updateMetrics();
+    }
+
+    function renderGroup(group) {
+      const teams = standings(group);
+      const groupMatches = matches.filter(match => match.group === group);
+      return `
+        <article class="group-card">
+          <div class="group-head">
+            <h2>Group ${group}</h2>
+            <div class="teams">${groups[group].map(team => `<span class="team-pill">${team}</span>`).join("")}</div>
+          </div>
+          <table aria-label="Group ${group} standings">
+            <thead><tr><th class="rank">#</th><th>Team</th><th>P</th><th>Pts</th><th>GD</th></tr></thead>
+            <tbody>
+              ${teams.map((team, index) => `
+                <tr>
+                  <td class="rank ${index < 3 ? "advancing" : ""}">${index + 1}</td>
+                  <td class="${index < 3 ? "advancing" : ""}">${team.name}</td>
+                  <td>${team.played}</td><td>${team.pts}</td><td>${team.gd}</td>
+                </tr>`).join("")}
+            </tbody>
+          </table>
+          <div class="matches">
+            ${groupMatches.map(renderGroupMatch).join("")}
+          </div>
+        </article>`;
+    }
+
+    function renderGroupMatch(match) {
+      const pick = state.picks[match.id];
+      const score = pick ? `${pick.scoreA}-${pick.scoreB}` : match.projection ? `${match.projection.goalsA}-${match.projection.goalsB}` : "Loading";
+      const resultLabel = pick ? resultLabelFor(match, pick) : match.projection ? "model" : "";
+      return `
+        <button class="match-btn" data-match="${match.id}" aria-label="${match.a} versus ${match.b}" ${match.projection ? "" : "disabled"}>
+          <span class="team-side">
+            <span class="team-name ${pick?.result === "a" ? "picked" : ""}">${match.a}</span>
+            <span class="pick-label">${pick?.result === "a" ? "Your pick" : match.projection ? `${Math.round(match.projection.aProb)}% win` : "Loading projection"}</span>
+          </span>
+          <span class="scoreline ${pick?.result === "draw" ? "picked" : ""}"><span>${match.date}</span><strong>${score}</strong><span>${resultLabel}</span></span>
+          <span class="team-side right">
+            <span class="team-name ${pick?.result === "b" ? "picked" : ""}">${match.b}</span>
+            <span class="pick-label">${pick?.result === "b" ? "Your pick" : match.projection ? `${Math.round(match.projection.bProb)}% win` : "Loading projection"}</span>
+          </span>
+        </button>`;
+    }
+
+    function resultLabelFor(match, pick) {
+      if (pick.result === "draw") return "draw pick";
+      return pick.result === "a" ? `${match.a} pick` : `${match.b} pick`;
+    }
+
+    function standings(group) {
+      const table = Object.fromEntries(groups[group].map(name => [name, { name, played: 0, pts: 0, gf: 0, ga: 0, gd: 0 }]));
+      matches.filter(match => match.group === group).forEach(match => {
+        const pick = state.picks[match.id];
+        if (!pick) return;
+        table[match.a].played += 1;
+        table[match.b].played += 1;
+        table[match.a].gf += pick.scoreA;
+        table[match.a].ga += pick.scoreB;
+        table[match.b].gf += pick.scoreB;
+        table[match.b].ga += pick.scoreA;
+        if (pick.scoreA > pick.scoreB) {
+          table[match.a].pts += 3;
+        } else if (pick.scoreB > pick.scoreA) {
+          table[match.b].pts += 3;
+        } else {
+          table[match.a].pts += 1;
+          table[match.b].pts += 1;
+        }
+      });
+      Object.values(table).forEach(team => team.gd = team.gf - team.ga);
+      return Object.values(table).sort((a, b) =>
+        b.pts - a.pts || b.gd - a.gd || b.gf - a.gf || ratings[b.name] - ratings[a.name]
+      );
+    }
+
+    function qualifiers() {
+      const ranked = Object.keys(groups).flatMap(group =>
+        standings(group).map((team, index) => ({ ...team, group, groupRank: index + 1 }))
+      );
+      const topTwo = ranked.filter(team => team.groupRank <= 2);
+      const thirds = ranked
+        .filter(team => team.groupRank === 3)
+        .sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf || ratings[b.name] - ratings[a.name])
+        .slice(0, 8);
+      return [...topTwo, ...thirds].sort((a, b) =>
+        a.groupRank - b.groupRank || b.pts - a.pts || b.gd - a.gd || ratings[b.name] - ratings[a.name]
+      );
+    }
+
+    function openMatch(matchId) {
+      const match = matches.find(item => item.id === matchId);
+      if (!match?.projection) return;
+      state.activeMatch = match;
+      state.activeMode = "group";
+      const pick = state.picks[match.id];
+      openProjectionModal({
+        id: match.id,
+        a: match.a,
+        b: match.b,
+        projection: match.projection,
+        title: `${match.a} vs ${match.b}`,
+        subtitle: `Group ${match.group} · ${match.date} · choose result or exact score for standings`,
+        pick,
+        mode: "group"
+      });
+    }
+
+    function openKnockoutMatch(matchId) {
+      const match = state.rounds.flatMap(round => round.matches).find(item => item.id === matchId);
+      if (!match || match.a === "TBD" || match.b === "TBD") return;
+      const projection = projectionFor(match.a, match.b, match.id.length);
+      if (!projection) return;
+      state.activeMatch = match;
+      state.activeMode = "knockout";
+      openProjectionModal({
+        id: match.id,
+        a: match.a,
+        b: match.b,
+        projection,
+        title: `${match.a} vs ${match.b}`,
+        subtitle: `${match.round} · choose winner to advance`,
+        pick: state.koPicks[match.id] || "",
+        mode: "knockout"
+      });
+    }
+
+    function openProjectionModal({ a, b, projection, title, subtitle, pick, mode }) {
+      document.getElementById("modal-title").textContent = title;
+      document.getElementById("modal-subtitle").textContent = subtitle;
+      document.getElementById("modal-team-a").textContent = a;
+      document.getElementById("modal-team-b").textContent = b;
+      document.getElementById("modal-score").textContent = `${projection.goalsA} - ${projection.goalsB}`;
+      document.getElementById("modal-a-note").textContent = `${Math.round(projection.aProb)}% win projection`;
+      document.getElementById("modal-b-note").textContent = `${Math.round(projection.bProb)}% win projection`;
+      document.getElementById("prob-a").style.width = `${projection.aProb}%`;
+      document.getElementById("prob-d").style.width = `${projection.drawProb}%`;
+      document.getElementById("prob-b").style.width = `${projection.bProb}%`;
+      document.getElementById("modal-prob-text").textContent = `${a} ${Math.round(projection.aProb)}% · Draw ${Math.round(projection.drawProb)}% · ${b} ${Math.round(projection.bProb)}%. ${mode === "group" ? "Group standings use the selected scoreline for points, goals for, goals against, and goal difference." : "Knockout rounds use winner selection only; score probabilities are shown for context."}`;
+      document.getElementById("score-grid").innerHTML = projection.scoreOdds.map((item, index) => {
+        const selectedScore = mode === "group" && pick && `${pick.scoreA}-${pick.scoreB}` === item.score;
+        const tag = mode === "group" ? "button" : "div";
+        const dataScore = mode === "group" ? ` data-score="${item.score}"` : "";
+        return `
+        <${tag} class="score-cell ${index === 0 ? "featured" : ""} ${selectedScore ? "selected" : ""}"${dataScore}>
+          <strong>${item.score}</strong>
+          <span>${item.probability.toFixed(1)}%</span>
+        </${tag}>`;
+      }).join("");
+      const chooseA = document.getElementById("choose-a");
+      const chooseDraw = document.getElementById("choose-draw");
+      const chooseB = document.getElementById("choose-b");
+      const choiceRow = chooseA.closest(".choice-row");
+      chooseA.textContent = mode === "group" ? `Pick ${a}` : `${a} advances`;
+      chooseDraw.textContent = "Pick draw";
+      chooseB.textContent = mode === "group" ? `Pick ${b}` : `${b} advances`;
+      chooseDraw.classList.toggle("hidden", mode === "knockout");
+      choiceRow.classList.toggle("two-choice", mode === "knockout");
+      chooseA.classList.toggle("selected", mode === "group" ? pick?.result === "a" : pick === a);
+      chooseDraw.classList.toggle("selected", mode === "group" && pick?.result === "draw");
+      chooseB.classList.toggle("selected", mode === "group" ? pick?.result === "b" : pick === b);
+      dialog.showModal();
+    }
+
+    function chooseGroupResult(result, score) {
+      if (!state.activeMatch) return;
+      const chosenScore = score || defaultScoreForResult(state.activeMatch.projection, result);
+      state.picks[state.activeMatch.id] = {
+        result,
+        scoreA: chosenScore.scoreA,
+        scoreB: chosenScore.scoreB
+      };
+      dialog.close();
+      render();
+      if (state.bracketBuilt) buildBracket();
+    }
+
+    function chooseModalSide(side) {
+      if (state.activeMode === "knockout") {
+        pickKnockout(state.activeMatch.id, side);
+      } else {
+        chooseGroupResult(side);
+      }
+    }
+
+    function defaultScoreForResult(projection, result) {
+      const found = projection.scoreOdds.find(item => {
+        const [scoreA, scoreB] = item.score.split("-").map(Number);
+        if (result === "a") return scoreA > scoreB;
+        if (result === "b") return scoreB > scoreA;
+        return scoreA === scoreB;
+      }) || projection.scoreOdds[0];
+      const [scoreA, scoreB] = found.score.split("-").map(Number);
+      return { scoreA, scoreB };
+    }
+
+    function resultFromScore(scoreA, scoreB) {
+      if (scoreA > scoreB) return "a";
+      if (scoreB > scoreA) return "b";
+      return "draw";
+    }
+
+    function autoPick() {
+      matches.forEach(match => {
+        if (!match.projection) return;
+        const [scoreA, scoreB] = match.projection.scoreOdds[0].score.split("-").map(Number);
+        state.picks[match.id] = { result: resultFromScore(scoreA, scoreB), scoreA, scoreB };
+      });
+      render();
+      buildBracket();
+      autoPickKnockout();
+    }
+
+    function reset() {
+      state.picks = {};
+      state.koPicks = {};
+      state.rounds = [];
+      state.bracketBuilt = false;
+      groupsView.style.display = "grid";
+      knockoutView.classList.remove("show");
+      setActiveStep("groups");
+      render();
+    }
+
+    function buildBracket() {
+      if (Object.keys(state.picks).length < matches.length) return;
+      state.bracketBuilt = true;
+      groupsView.style.display = "none";
+      knockoutView.classList.add("show");
+      const q = qualifiers();
+      const r32 = [];
+      for (let i = 0; i < 16; i += 1) {
+        r32.push({ id: `R32-${i}`, round: "Round of 32", a: q[i].name, b: q[31 - i].name });
+      }
+      const rounds = [
+        { key: "R32", title: "Round of 32", matches: r32 },
+        { key: "R16", title: "Round of 16", matches: nextRound("R16", r32, 8) },
+        { key: "QF", title: "Quarter-finals", matches: nextRound("QF", nextRound("R16", r32, 8), 4) },
+        { key: "SF", title: "Semi-finals", matches: nextRound("SF", nextRound("QF", nextRound("R16", r32, 8), 4), 2) },
+        { key: "F", title: "Final", matches: nextRound("F", nextRound("SF", nextRound("QF", nextRound("R16", r32, 8), 4), 2), 1) }
+      ];
+      state.rounds = rounds;
+      roundsEl.innerHTML = rounds.map(renderRound).join("");
+      updateChampion();
+      updateMetrics();
+      setActiveStep(activeRoundKey(rounds));
+    }
+
+    function autoPickKnockout() {
+      let pickedOne = true;
+      while (pickedOne && !state.koPicks["F-0"]) {
+        pickedOne = false;
+        const nextMatch = state.rounds
+          .flatMap(round => round.matches)
+          .find(match => !state.koPicks[match.id] && match.a !== "TBD" && match.b !== "TBD");
+
+        if (nextMatch) {
+          const projection = projectionFor(nextMatch.a, nextMatch.b, nextMatch.id.length);
+          if (!projection) return;
+          state.koPicks[nextMatch.id] = projection.aProb >= projection.bProb ? nextMatch.a : nextMatch.b;
+          buildBracket();
+          pickedOne = true;
+        }
+      }
+    }
+
+    function winnerFor(match) {
+      return state.koPicks[match.id] || "";
+    }
+
+    function nextRound(key, previous, count) {
+      const output = [];
+      for (let i = 0; i < count; i += 1) {
+        const left = previous[i * 2];
+        const right = previous[i * 2 + 1];
+        output.push({
+          id: `${key}-${i}`,
+          round: key,
+          a: winnerFor(left) || "TBD",
+          b: winnerFor(right) || "TBD"
+        });
+      }
+      return output;
+    }
+
+    function renderRound(round) {
+      return `
+        <section class="round-panel">
+          <h2>${round.title}</h2>
+          <div class="matches">
+            ${round.matches.map(match => renderKoMatch(match)).join("")}
+          </div>
+        </section>`;
+    }
+
+    function renderKoMatch(match) {
+      const selected = state.koPicks[match.id];
+      const disabled = match.a === "TBD" || match.b === "TBD";
+      const proj = disabled ? null : projectionFor(match.a, match.b, match.id.length);
+      const label = disabled ? "Waiting for previous picks" : proj ? `${proj.goalsA}-${proj.goalsB} model` : "Loading projection";
+      return `
+        <button class="match-btn ko-match" data-ko="${match.id}" ${disabled || !proj ? "disabled" : ""}>
+          <span class="ko-row ${selected === match.a ? "selected" : ""}" data-side="a">
+            <span>${match.a}</span><span>${proj ? Math.round(proj.aProb) + "%" : ""}</span>
+          </span>
+          <span class="ko-row ${selected === match.b ? "selected" : ""}" data-side="b">
+            <span>${match.b}</span><span>${proj ? Math.round(proj.bProb) + "%" : ""}</span>
+          </span>
+          <span class="pick-label">${label}</span>
+        </button>`;
+    }
+
+    function pickKnockout(matchId, side) {
+      const match = state.rounds.flatMap(round => round.matches).find(item => item.id === matchId);
+      if (!match) return;
+      const chosen = side === "a" ? match.a : match.b;
+      if (chosen === "TBD") return;
+      state.koPicks[matchId] = chosen;
+      const dependentPrefix = matchId.split("-")[0];
+      if (dependentPrefix !== "F") {
+        clearDownstream(dependentPrefix);
+      }
+      dialog.close();
+      buildBracket();
+    }
+
+    function clearDownstream(prefix) {
+      const order = ["R32", "R16", "QF", "SF", "F"];
+      const index = order.indexOf(prefix);
+      order.slice(index + 1).forEach(round => {
+        Object.keys(state.koPicks).forEach(key => {
+          if (key.startsWith(round)) delete state.koPicks[key];
+        });
+      });
+    }
+
+    function updateChampion() {
+      const champion = state.koPicks["F-0"] || "";
+      document.getElementById("champion-name").textContent = champion || "Choose the final winner";
+      document.getElementById("champion-metric").textContent = champion || "TBD";
+    }
+
+    function activeRoundKey(rounds) {
+      const round = rounds.find(item => item.matches.some(match => !state.koPicks[match.id] && match.a !== "TBD" && match.b !== "TBD"));
+      if (!round) return state.koPicks["F-0"] ? "final" : "r32";
+      return round.key.toLowerCase();
+    }
+
+    function setActiveStep(key) {
+      const map = { groups: "step-groups", r32: "step-r32", r16: "step-r16", qf: "step-qf", sf: "step-sf", f: "step-final", final: "step-final" };
+      Object.values(map).forEach(id => document.getElementById(id).classList.remove("active"));
+      document.getElementById(map[key] || "step-groups").classList.add("active");
+    }
+
+    function updateMetrics() {
+      const picked = Object.keys(state.picks).length;
+      document.getElementById("picked-count").textContent = `${picked} / ${matches.length}`;
+      document.getElementById("qualified-count").textContent = picked === matches.length ? qualifiers().length : 0;
+      document.getElementById("current-round").textContent = state.bracketBuilt ? "Knockout" : "Groups";
+      document.getElementById("build-bracket").disabled = picked < matches.length;
+      if (!state.bracketBuilt) document.getElementById("champion-metric").textContent = "TBD";
+    }
+
+    groupsView.addEventListener("click", event => {
+      const button = event.target.closest("[data-match]");
+      if (button) openMatch(button.dataset.match);
+    });
+
+    roundsEl.addEventListener("click", event => {
+      const button = event.target.closest("[data-ko]");
+      if (!button || button.disabled) return;
+      openKnockoutMatch(button.dataset.ko);
+    });
+
+    document.getElementById("score-grid").addEventListener("click", event => {
+      if (state.activeMode !== "group") return;
+      const button = event.target.closest("[data-score]");
+      if (!button) return;
+      const [scoreA, scoreB] = button.dataset.score.split("-").map(Number);
+      chooseGroupResult(resultFromScore(scoreA, scoreB), { scoreA, scoreB });
+    });
+    document.getElementById("choose-a").addEventListener("click", () => chooseModalSide("a"));
+    document.getElementById("choose-draw").addEventListener("click", () => chooseGroupResult("draw"));
+    document.getElementById("choose-b").addEventListener("click", () => chooseModalSide("b"));
+    document.getElementById("close-dialog").addEventListener("click", () => dialog.close());
+    document.getElementById("auto-pick").addEventListener("click", autoPick);
+    document.getElementById("reset").addEventListener("click", reset);
+    document.getElementById("build-bracket").addEventListener("click", buildBracket);
+    document.getElementById("back-to-groups").addEventListener("click", () => {
+      groupsView.style.display = "grid";
+      knockoutView.classList.remove("show");
+      setActiveStep("groups");
+    });
+
+    render();
+    loadProjectionJson();
+  </script>
+</body>
+</html>

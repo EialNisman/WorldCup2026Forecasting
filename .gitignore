@@ -5,3 +5,6 @@
 .venv
 METHODOLOGY_NOTES.MD
 tmp_scrape_manager_team_matches.R
+2.Model_Selection-R/models.html
+.DS_Store
+3.SimulationStudy-Python/__pycache__
