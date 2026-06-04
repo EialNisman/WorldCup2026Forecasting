@@ -1,10 +1,24 @@
-1.DataCleaning-R/kaggle_data
+# Kaggle raw data
+1.DataCleaning-R/kaggle_data/
+
+# Development notebooks
 1.DataCleaning-R/PlayerStats.ipynb
-.gitignore
 3.SimulationStudy/test.ipynb
-.venv
+
+# Python virtual environment
+.venv/
+
+# Personal notes
 METHODOLOGY_NOTES.MD
+
+# Temporary scripts
 tmp_scrape_manager_team_matches.R
+
+# Generated HTML
 2.Model_Selection-R/models.html
+
+# macOS
 .DS_Store
-3.SimulationStudy-Python/__pycache__
+
+# Python cache
+3.SimulationStudy-Python/__pycache__/
