@@ -13,31 +13,31 @@ This is a self-contained prototype for a World Cup 2026 forecasting dashboard.
 
 ## Projection Data Contract
 
-Export your Python model output as JSON with one row per team pairing:
+Export your Python model output as JSON with a `matches` array:
 
 ```json
-[
-  {
-    "team_a": "Mexico",
-    "team_b": "South Africa",
-    "win_a": 0.64,
-    "draw": 0.22,
-    "win_b": 0.14,
-    "score_probs": [
-      { "score_a": 0, "score_b": 0, "prob": 0.071 },
-      { "score_a": 1, "score_b": 0, "prob": 0.118 },
-      { "score_a": 1, "score_b": 1, "prob": 0.104 }
-    ]
-  }
-]
+{
+  "matches": [
+    {
+      "team1_name": "Mexico",
+      "team2_name": "South Africa",
+      "winteam1_prob": 0.64,
+      "tie_prob": 0.22,
+      "winteam2_prob": 0.14,
+      "top_scores": [
+        { "score": "0-0", "team1_goals": 0, "team2_goals": 0, "probability": 0.071 },
+        { "score": "1-0", "team1_goals": 1, "team2_goals": 0, "probability": 0.118 },
+        { "score": "1-1", "team1_goals": 1, "team2_goals": 1, "probability": 0.104 }
+      ]
+    }
+  ]
+}
 ```
 
 The front end indexes pairings by normalized team names and handles reversed order automatically. If the fixture is `South Africa` vs `Mexico` but your dataset row is `Mexico` vs `South Africa`, the UI swaps win probabilities and scorelines.
 
-To wire this in, serve `projections.json` next to the dashboard and call:
+The dashboard automatically tries to load these files in order:
 
-```js
-loadProjectionJson("./projections.json");
-```
+`./wc2026_predictions.json`, `./data/wc2026_predictions.json`, then `./projections.json`.
 
-For a real app, put groups/fixtures/projections behind API routes or static JSON files, then use the same shape in React/Vue/Svelte.
+Open the dashboard through a local server for JSON loading. Direct `file://` pages often block `fetch`.

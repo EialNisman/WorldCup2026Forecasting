@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>World Cup 2026 Forecast Bracket Preview</title>
   <style>
     :root {
@@ -480,6 +483,78 @@
     .prob-d { background: var(--gold); }
     .prob-b { background: var(--blue); }
 
+    .poisson-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      overflow: hidden;
+    }
+
+    .poisson-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .poisson-controls {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .poisson-toggle {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      cursor: pointer;
+      padding: 5px 9px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .poisson-toggle.active {
+      border-color: var(--green);
+      color: var(--green);
+      background: rgba(15, 138, 96, .08);
+      font-weight: 800;
+    }
+
+    .poisson-plot {
+      padding: 12px;
+    }
+
+    .poisson-plot svg {
+      width: 100%;
+      height: 170px;
+      display: block;
+    }
+
+    .poisson-legend {
+      display: flex;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 0 12px 12px;
+      flex-wrap: wrap;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .legend-home { background: var(--green); }
+    .legend-away { background: var(--blue); }
+
     .choice-row {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -570,10 +645,98 @@
       color: #9a6a10;
     }
 
+    .forecast-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .forecast-select-row {
+      display: grid;
+      gap: 7px;
+    }
+
+    .forecast-select-row label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .forecast-select-row select {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      min-height: 42px;
+      padding: 0 12px;
+    }
+
+    .forecast-results {
+      display: grid;
+      gap: 10px;
+    }
+
+    .forecast-row {
+      align-items: center;
+      background: #fbfcfd;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: minmax(92px, 130px) 1fr minmax(74px, auto);
+      padding: 10px;
+    }
+
+    .forecast-stage {
+      font-weight: 800;
+    }
+
+    .forecast-track {
+      background: #e8edf3;
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .forecast-fill {
+      background: var(--green);
+      border-radius: 999px;
+      display: block;
+      height: 100%;
+    }
+
+    .forecast-value {
+      color: var(--muted);
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      white-space: nowrap;
+    }
+
     .hint {
       color: var(--muted);
       font-size: 13px;
       line-height: 1.45;
+    }
+
+    .info-copy {
+      padding: 18px;
+      display: grid;
+      gap: 13px;
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .info-copy p {
+      margin: 0;
+    }
+
+    .info-copy ul {
+      margin: 0;
+      padding-left: 20px;
+      display: grid;
+      gap: 9px;
     }
 
     @media (max-width: 1100px) {
@@ -589,8 +752,12 @@
       .metric-row { grid-template-columns: repeat(2, 1fr); }
       .projected-score { grid-template-columns: 1fr; }
       .big-score { font-size: 30px; }
+      .poisson-top { align-items: flex-start; flex-direction: column; }
+      .poisson-controls { justify-content: flex-start; }
       .score-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .choice-row { grid-template-columns: 1fr; }
+      .forecast-row { grid-template-columns: 1fr; }
+      .forecast-value { text-align: left; }
       .champion-panel { align-items: flex-start; flex-direction: column; }
       .champion-name { font-size: 28px; }
     }
@@ -624,6 +791,8 @@
           <div class="metric"><b id="champion-metric">TBD</b><span>Projected champion</span></div>
         </div>
         <div class="actions">
+          <button class="secondary" id="model-info">Info</button>
+          <button class="secondary" id="team-forecasts">Team forecasts</button>
           <button class="secondary" id="auto-pick">Auto-fill projections</button>
           <button class="secondary" id="reset">Reset picks</button>
           <button class="primary" id="build-bracket" disabled>Build knockout bracket</button>
@@ -674,6 +843,18 @@
           <span class="prob-b" id="prob-b"></span>
         </div>
         <div class="hint" id="modal-prob-text"></div>
+        <div class="poisson-card" aria-label="Poisson goal curve">
+          <div class="poisson-top">
+            <span>Poisson goal curve</span>
+            <div class="poisson-controls" aria-label="Poisson chart view">
+              <button class="poisson-toggle active" data-poisson-view="overlay">Overlay</button>
+              <button class="poisson-toggle" data-poisson-view="home">Home</button>
+              <button class="poisson-toggle" data-poisson-view="away">Away</button>
+            </div>
+          </div>
+          <div class="poisson-plot" id="poisson-plot"></div>
+          <div class="poisson-legend" id="poisson-legend"></div>
+        </div>
         <div class="score-odds" aria-label="Exact score odds">
           <div class="score-odds-head">
             <span>Exact score odds</span>
@@ -686,6 +867,47 @@
           <button class="choice draw" id="choose-draw">Pick draw</button>
           <button class="choice" id="choose-b"></button>
         </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="forecast-dialog">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h2>Team forecasts</h2>
+          <div class="subtle" id="forecast-subtitle">Choose a team to view simulated tournament chances</div>
+        </div>
+        <button class="close" id="close-forecast-dialog" aria-label="Close">×</button>
+      </div>
+      <div class="forecast-form">
+        <div class="forecast-select-row">
+          <label for="forecast-team-select">Team</label>
+          <select id="forecast-team-select"></select>
+        </div>
+        <div class="forecast-results" id="forecast-results"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="info-dialog">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h2>Probability adjustments</h2>
+          <div class="subtle">Why the forecast caps some extreme probabilities</div>
+        </div>
+        <button class="close" id="close-info-dialog" aria-label="Close">×</button>
+      </div>
+      <div class="info-copy">
+        <p>This World Cup increased participating countries by 50%. The model was trained only on previous World Cup data, so it treats some 2026 teams as extreme outliers. There have not been World Cup matchups with this much difference in team metrics, which can lead the model to give extremely high win probabilities to superior teams playing against much lower-rated teams.</p>
+        <p>The following arbitrary adjustments were made to take this into account:</p>
+        <ul>
+          <li>Group-stage winning odds are capped at 94%. This was decided based on the maximum odds a team has ever had to win a World Cup group-stage game, according to bookmakers.</li>
+          <li>Knockout stages are capped at 80% odds of winning in two-way matchups with no ties. This was also based on bookmaker odds, as only one game has ever shown odds above 80% for a team to win a knockout-stage game.</li>
+        </ul>
+        <p>The point is to give more probability mass to upsets, which are real possibilities in football. This is a domain adjustment: a model trained to predict games usually between top-50 ranked nations is not particularly equipped to predict games involving much lower-rated teams.</p>
+        <p>For context, between the 2010 and 2022 World Cups, an average of 3 teams per tournament were ranked 50 or below. For the 2026 World Cup, 12 teams are ranked 50 or below.</p>
       </div>
     </div>
   </dialog>
@@ -733,9 +955,533 @@
     };
 
     const projectionIndex = {};
+    const forecastIndex = {};
+    let forecastMetadata = null;
     let projectionsLoaded = false;
+    let forecastsLoaded = false;
 
     const pairOrder = [[0,1], [2,3], [3,1], [0,2], [1,2], [3,0]];
+    const r32Template = [
+      { matchNumber: 73, a: "2A", b: "2B" },
+      { matchNumber: 74, a: "1E", b: "3ABCDF" },
+      { matchNumber: 75, a: "1F", b: "2C" },
+      { matchNumber: 76, a: "1C", b: "2F" },
+      { matchNumber: 77, a: "1I", b: "3CDFGH" },
+      { matchNumber: 78, a: "2E", b: "2I" },
+      { matchNumber: 79, a: "1A", b: "3CEFHI" },
+      { matchNumber: 80, a: "1L", b: "3EHIJK" },
+      { matchNumber: 81, a: "1D", b: "3BEFIJ" },
+      { matchNumber: 82, a: "1G", b: "3AEHIJ" },
+      { matchNumber: 83, a: "2K", b: "2L" },
+      { matchNumber: 84, a: "1H", b: "2J" },
+      { matchNumber: 85, a: "1B", b: "3EFGIJ" },
+      { matchNumber: 86, a: "1J", b: "2H" },
+      { matchNumber: 87, a: "1K", b: "3DEIJL" },
+      { matchNumber: 88, a: "2D", b: "2G" }
+    ];
+    const knockoutRoundMap = {
+      R16: [[90, 73, 75], [89, 74, 77], [91, 76, 78], [92, 79, 80], [93, 83, 84], [94, 81, 82], [95, 86, 88], [96, 85, 87]],
+      QF: [[97, 89, 90], [98, 93, 94], [99, 91, 92], [100, 95, 96]],
+      SF: [[101, 97, 98], [102, 99, 100]],
+      F: [[104, 101, 102]]
+    };
+    const thirdPlaceAssignmentTable = {
+      "ABCDEFGH": {74: "3C", 77: "3F", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3G", 87: "3D"},
+      "ABCDEFGI": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABCDEFGJ": {74: "3D", 77: "3F", 79: "3C", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABCDEFGK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABCDEFGL": {74: "3D", 77: "3F", 79: "3C", 80: "3E", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDEFHI": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3E", 87: "3D"},
+      "ABCDEFHJ": {74: "3C", 77: "3F", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3J", 87: "3D"},
+      "ABCDEFHK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3E", 87: "3D"},
+      "ABCDEFHL": {74: "3C", 77: "3D", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3F", 87: "3L"},
+      "ABCDEFIJ": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABCDEFIK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3E", 87: "3I"},
+      "ABCDEFIL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3A", 85: "3E", 87: "3L"},
+      "ABCDEFJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABCDEFJL": {74: "3D", 77: "3F", 79: "3C", 80: "3E", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDEFKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3E", 87: "3L"},
+      "ABCDEGHI": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABCDEGHJ": {74: "3C", 77: "3D", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABCDEGHK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABCDEGHL": {74: "3C", 77: "3D", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDEGIJ": {74: "3C", 77: "3D", 79: "3E", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCDEGIK": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCDEGIL": {74: "3C", 77: "3D", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDEGJK": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3J"},
+      "ABCDEGJL": {74: "3C", 77: "3D", 79: "3E", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDEGKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDEHIJ": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABCDEHIK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3E", 87: "3I"},
+      "ABCDEHIL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3E", 87: "3L"},
+      "ABCDEHJK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABCDEHJL": {74: "3C", 77: "3D", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDEHKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3E", 87: "3L"},
+      "ABCDEIJK": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCDEIJL": {74: "3C", 77: "3D", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDEIKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABCDEJKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDFGHI": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3D"},
+      "ABCDFGHJ": {74: "3C", 77: "3F", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3D"},
+      "ABCDFGHK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3D"},
+      "ABCDFGHL": {74: "3D", 77: "3F", 79: "3C", 80: "3H", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDFGIJ": {74: "3D", 77: "3F", 79: "3C", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCDFGIK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCDFGIL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDFGJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3J"},
+      "ABCDFGJL": {74: "3D", 77: "3F", 79: "3C", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDFGKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDFHIJ": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3D"},
+      "ABCDFHIK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3F", 87: "3I"},
+      "ABCDFHIL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3F", 87: "3L"},
+      "ABCDFHJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3D"},
+      "ABCDFHJL": {74: "3D", 77: "3F", 79: "3C", 80: "3H", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDFHKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3F", 87: "3L"},
+      "ABCDFIJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCDFIJL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDFIKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABCDFJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDGHIJ": {74: "3C", 77: "3D", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCDGHIK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCDGHIL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDGHJK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3J"},
+      "ABCDGHJL": {74: "3C", 77: "3D", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDGHKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDGIJK": {74: "3D", 77: "3G", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCDGIJL": {74: "3D", 77: "3G", 79: "3C", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDGIKL": {74: "3C", 77: "3D", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCDGJKL": {74: "3D", 77: "3G", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDHIJK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCDHIJL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDHIKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABCDHJKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCDIJKL": {74: "3C", 77: "3D", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCEFGHI": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABCEFGHJ": {74: "3C", 77: "3F", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABCEFGHK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABCEFGHL": {74: "3C", 77: "3F", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCEFGIJ": {74: "3C", 77: "3F", 79: "3E", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCEFGIK": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCEFGIL": {74: "3C", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCEFGJK": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3J"},
+      "ABCEFGJL": {74: "3C", 77: "3F", 79: "3E", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCEFGKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCEFHIJ": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABCEFHIK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3E", 87: "3I"},
+      "ABCEFHIL": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3E", 87: "3L"},
+      "ABCEFHJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABCEFHJL": {74: "3C", 77: "3F", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCEFHKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3E", 87: "3L"},
+      "ABCEFIJK": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCEFIJL": {74: "3C", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCEFIKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABCEFJKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCEGHIJ": {74: "3C", 77: "3G", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABCEGHIK": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCEGHIL": {74: "3C", 77: "3H", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCEGHJK": {74: "3C", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABCEGHJL": {74: "3C", 77: "3G", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCEGHKL": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCEGIJK": {74: "3C", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCEGIJL": {74: "3C", 77: "3G", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCEGIKL": {74: "3A", 77: "3C", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "ABCEGJKL": {74: "3C", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCEHIJK": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCEHIJL": {74: "3C", 77: "3H", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCEHIKL": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABCEHJKL": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCEIJKL": {74: "3A", 77: "3C", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "ABCFGHIJ": {74: "3C", 77: "3F", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCFGHIK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABCFGHIL": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCFGHJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3J"},
+      "ABCFGHJL": {74: "3C", 77: "3F", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCFGHKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCFGIJK": {74: "3F", 77: "3G", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCFGIJL": {74: "3F", 77: "3G", 79: "3C", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCFGIKL": {74: "3C", 77: "3F", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCFGJKL": {74: "3F", 77: "3G", 79: "3C", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCFHIJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCFHIJL": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCFHIKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABCFHJKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCFIJKL": {74: "3C", 77: "3F", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCGHIJK": {74: "3C", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABCGHIJL": {74: "3C", 77: "3G", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCGHIKL": {74: "3C", 77: "3H", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABCGHJKL": {74: "3C", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCGIJKL": {74: "3C", 77: "3G", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABCHIJKL": {74: "3C", 77: "3H", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDEFGHI": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABDEFGHJ": {74: "3D", 77: "3F", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABDEFGHK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3E"},
+      "ABDEFGHL": {74: "3D", 77: "3F", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDEFGIJ": {74: "3D", 77: "3F", 79: "3E", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABDEFGIK": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABDEFGIL": {74: "3D", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDEFGJK": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3J"},
+      "ABDEFGJL": {74: "3D", 77: "3F", 79: "3E", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDEFGKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDEFHIJ": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABDEFHIK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3E", 87: "3I"},
+      "ABDEFHIL": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3E", 87: "3L"},
+      "ABDEFHJK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABDEFHJL": {74: "3D", 77: "3F", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDEFHKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3E", 87: "3L"},
+      "ABDEFIJK": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABDEFIJL": {74: "3D", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDEFIKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABDEFJKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDEGHIJ": {74: "3D", 77: "3G", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABDEGHIK": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABDEGHIL": {74: "3D", 77: "3H", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDEGHJK": {74: "3D", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABDEGHJL": {74: "3D", 77: "3G", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDEGHKL": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDEGIJK": {74: "3D", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABDEGIJL": {74: "3D", 77: "3G", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDEGIKL": {74: "3A", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "ABDEGJKL": {74: "3D", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDEHIJK": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABDEHIJL": {74: "3D", 77: "3H", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDEHIKL": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABDEHJKL": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDEIJKL": {74: "3A", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "ABDFGHIJ": {74: "3D", 77: "3F", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABDFGHIK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABDFGHIL": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDFGHJK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3J"},
+      "ABDFGHJL": {74: "3D", 77: "3F", 79: "3H", 80: "3J", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDFGHKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDFGIJK": {74: "3D", 77: "3G", 79: "3F", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABDFGIJL": {74: "3D", 77: "3G", 79: "3F", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDFGIKL": {74: "3D", 77: "3F", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDFGJKL": {74: "3D", 77: "3G", 79: "3F", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDFHIJK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABDFHIJL": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDFHIKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABDFHJKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDFIJKL": {74: "3D", 77: "3F", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDGHIJK": {74: "3D", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABDGHIJL": {74: "3D", 77: "3G", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDGHIKL": {74: "3D", 77: "3H", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABDGHJKL": {74: "3D", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDGIJKL": {74: "3D", 77: "3G", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABDHIJKL": {74: "3D", 77: "3H", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABEFGHIJ": {74: "3F", 77: "3G", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABEFGHIK": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3I"},
+      "ABEFGHIL": {74: "3F", 77: "3H", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABEFGHJK": {74: "3F", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3E"},
+      "ABEFGHJL": {74: "3F", 77: "3G", 79: "3H", 80: "3E", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABEFGHKL": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3G", 87: "3L"},
+      "ABEFGIJK": {74: "3F", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABEFGIJL": {74: "3F", 77: "3G", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABEFGIKL": {74: "3A", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "ABEFGJKL": {74: "3F", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABEFHIJK": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABEFHIJL": {74: "3F", 77: "3H", 79: "3E", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABEFHIKL": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3I", 87: "3L"},
+      "ABEFHJKL": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABEFIJKL": {74: "3A", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "ABEGHIJK": {74: "3A", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3I"},
+      "ABEGHIJL": {74: "3A", 77: "3G", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "ABEGHIKL": {74: "3A", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "ABEGHJKL": {74: "3A", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "ABEGIJKL": {74: "3A", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "ABEHIJKL": {74: "3A", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "ABFGHIJK": {74: "3F", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3I"},
+      "ABFGHIJL": {74: "3F", 77: "3G", 79: "3H", 80: "3I", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABFGHIKL": {74: "3A", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "ABFGHJKL": {74: "3F", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABFGIJKL": {74: "3F", 77: "3G", 79: "3I", 80: "3K", 81: "3B", 82: "3A", 85: "3J", 87: "3L"},
+      "ABFHIJKL": {74: "3A", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "ABGHIJKL": {74: "3A", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "ACDEFGHI": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3E", 82: "3A", 85: "3G", 87: "3D"},
+      "ACDEFGHJ": {74: "3C", 77: "3F", 79: "3H", 80: "3E", 81: "3J", 82: "3A", 85: "3G", 87: "3D"},
+      "ACDEFGHK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3G", 87: "3D"},
+      "ACDEFGHL": {74: "3C", 77: "3D", 79: "3H", 80: "3E", 81: "3F", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEFGIJ": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3E"},
+      "ACDEFGIK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3A", 85: "3G", 87: "3I"},
+      "ACDEFGIL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3E", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEFGJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3E"},
+      "ACDEFGJL": {74: "3D", 77: "3F", 79: "3C", 80: "3E", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEFGKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEFHIJ": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3E", 82: "3A", 85: "3J", 87: "3D"},
+      "ACDEFHIK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3F", 82: "3A", 85: "3E", 87: "3I"},
+      "ACDEFHIL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3F", 82: "3A", 85: "3E", 87: "3L"},
+      "ACDEFHJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3J", 87: "3D"},
+      "ACDEFHJL": {74: "3C", 77: "3D", 79: "3H", 80: "3E", 81: "3F", 82: "3A", 85: "3J", 87: "3L"},
+      "ACDEFHKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3F", 82: "3A", 85: "3E", 87: "3L"},
+      "ACDEFIJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3A", 85: "3J", 87: "3I"},
+      "ACDEFIJL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3E", 82: "3A", 85: "3J", 87: "3L"},
+      "ACDEFIKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3I", 82: "3A", 85: "3E", 87: "3L"},
+      "ACDEFJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3A", 85: "3J", 87: "3L"},
+      "ACDEGHIJ": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3E"},
+      "ACDEGHIK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3G", 87: "3I"},
+      "ACDEGHIL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3E", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEGHJK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3E"},
+      "ACDEGHJL": {74: "3C", 77: "3D", 79: "3H", 80: "3E", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEGHKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEGIJK": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "ACDEGIJL": {74: "3C", 77: "3D", 79: "3E", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEGIKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEGJKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDEHIJK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3J", 87: "3I"},
+      "ACDEHIJL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3E", 82: "3A", 85: "3J", 87: "3L"},
+      "ACDEHIKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3E", 87: "3L"},
+      "ACDEHJKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3J", 87: "3L"},
+      "ACDEIJKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ACDFGHIJ": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3D"},
+      "ACDFGHIK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3F", 82: "3A", 85: "3G", 87: "3I"},
+      "ACDFGHIL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3F", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDFGHJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3D"},
+      "ACDFGHJL": {74: "3D", 77: "3F", 79: "3C", 80: "3H", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDFGHKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3F", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDFGIJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "ACDFGIJL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDFGIKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDFGJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDFHIJK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3F", 82: "3A", 85: "3J", 87: "3I"},
+      "ACDFHIJL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3F", 82: "3A", 85: "3J", 87: "3L"},
+      "ACDFHIKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3F", 87: "3L"},
+      "ACDFHJKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3F", 82: "3A", 85: "3J", 87: "3L"},
+      "ACDFIJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ACDGHIJK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "ACDGHIJL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDGHIKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDGHJKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDGIJKL": {74: "3C", 77: "3D", 79: "3I", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACDHIJKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ACEFGHIJ": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3E"},
+      "ACEFGHIK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3G", 87: "3I"},
+      "ACEFGHIL": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3E", 82: "3A", 85: "3G", 87: "3L"},
+      "ACEFGHJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3E"},
+      "ACEFGHJL": {74: "3C", 77: "3F", 79: "3H", 80: "3E", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACEFGHKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3G", 87: "3L"},
+      "ACEFGIJK": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "ACEFGIJL": {74: "3C", 77: "3F", 79: "3E", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACEFGIKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "ACEFGJKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACEFHIJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3J", 87: "3I"},
+      "ACEFHIJL": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3E", 82: "3A", 85: "3J", 87: "3L"},
+      "ACEFHIKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3E", 87: "3L"},
+      "ACEFHJKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3J", 87: "3L"},
+      "ACEFIJKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ACEGHIJK": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "ACEGHIJL": {74: "3C", 77: "3H", 79: "3E", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACEGHIKL": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "ACEGHJKL": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACEGIJKL": {74: "3C", 77: "3G", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ACEHIJKL": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ACFGHIJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "ACFGHIJL": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACFGHIKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "ACFGHJKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACFGIJKL": {74: "3C", 77: "3F", 79: "3I", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ACFHIJKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ACGHIJKL": {74: "3C", 77: "3G", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ADEFGHIJ": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3E"},
+      "ADEFGHIK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3G", 87: "3I"},
+      "ADEFGHIL": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3E", 82: "3A", 85: "3G", 87: "3L"},
+      "ADEFGHJK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3E"},
+      "ADEFGHJL": {74: "3D", 77: "3F", 79: "3H", 80: "3E", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ADEFGHKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3G", 87: "3L"},
+      "ADEFGIJK": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "ADEFGIJL": {74: "3D", 77: "3F", 79: "3E", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ADEFGIKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "ADEFGJKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ADEFHIJK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3J", 87: "3I"},
+      "ADEFHIJL": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3E", 82: "3A", 85: "3J", 87: "3L"},
+      "ADEFHIKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3E", 87: "3L"},
+      "ADEFHJKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3E", 82: "3A", 85: "3J", 87: "3L"},
+      "ADEFIJKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ADEGHIJK": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "ADEGHIJL": {74: "3D", 77: "3H", 79: "3E", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ADEGHIKL": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "ADEGHJKL": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ADEGIJKL": {74: "3D", 77: "3G", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ADEHIJKL": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ADFGHIJK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "ADFGHIJL": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ADFGHIKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "ADFGHJKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ADFGIJKL": {74: "3D", 77: "3F", 79: "3I", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "ADFHIJKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "ADGHIJKL": {74: "3D", 77: "3G", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "AEFGHIJK": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3I"},
+      "AEFGHIJL": {74: "3F", 77: "3H", 79: "3E", 80: "3I", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "AEFGHIKL": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3G", 87: "3L"},
+      "AEFGHJKL": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3J", 82: "3A", 85: "3G", 87: "3L"},
+      "AEFGIJKL": {74: "3F", 77: "3G", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "AEFHIJKL": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "AEGHIJKL": {74: "3A", 77: "3G", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3J", 87: "3L"},
+      "AFGHIJKL": {74: "3F", 77: "3G", 79: "3H", 80: "3K", 81: "3I", 82: "3A", 85: "3J", 87: "3L"},
+      "BCDEFGHI": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3H", 85: "3G", 87: "3E"},
+      "BCDEFGHJ": {74: "3C", 77: "3F", 79: "3H", 80: "3E", 81: "3B", 82: "3J", 85: "3G", 87: "3D"},
+      "BCDEFGHK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3H", 85: "3G", 87: "3E"},
+      "BCDEFGHL": {74: "3D", 77: "3F", 79: "3C", 80: "3E", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BCDEFGIJ": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3E"},
+      "BCDEFGIK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3E", 85: "3G", 87: "3I"},
+      "BCDEFGIL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3E", 85: "3G", 87: "3L"},
+      "BCDEFGJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3E"},
+      "BCDEFGJL": {74: "3D", 77: "3F", 79: "3C", 80: "3E", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCDEFGKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3E", 85: "3G", 87: "3L"},
+      "BCDEFHIJ": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3H", 85: "3J", 87: "3E"},
+      "BCDEFHIK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3H", 85: "3E", 87: "3I"},
+      "BCDEFHIL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3H", 85: "3E", 87: "3L"},
+      "BCDEFHJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3E"},
+      "BCDEFHJL": {74: "3D", 77: "3F", 79: "3C", 80: "3E", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BCDEFHKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3H", 85: "3E", 87: "3L"},
+      "BCDEFIJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3E", 85: "3J", 87: "3I"},
+      "BCDEFIJL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3E", 85: "3J", 87: "3L"},
+      "BCDEFIKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3I", 85: "3E", 87: "3L"},
+      "BCDEFJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3E", 85: "3J", 87: "3L"},
+      "BCDEGHIJ": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3E"},
+      "BCDEGHIK": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3G", 87: "3I"},
+      "BCDEGHIL": {74: "3C", 77: "3D", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BCDEGHJK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3E"},
+      "BCDEGHJL": {74: "3C", 77: "3D", 79: "3H", 80: "3E", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCDEGHKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BCDEGIJK": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3I"},
+      "BCDEGIJL": {74: "3C", 77: "3D", 79: "3E", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCDEGIKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BCDEGJKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCDEHIJK": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3I"},
+      "BCDEHIJL": {74: "3C", 77: "3D", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BCDEHIKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3I", 87: "3L"},
+      "BCDEHJKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BCDEIJKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BCDFGHIJ": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3D"},
+      "BCDFGHIK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3H", 85: "3G", 87: "3I"},
+      "BCDFGHIL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BCDFGHJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3D"},
+      "BCDFGHJL": {74: "3D", 77: "3F", 79: "3C", 80: "3J", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BCDFGHKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BCDFGIJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3I"},
+      "BCDFGIJL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCDFGIKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BCDFGJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCDFHIJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3I"},
+      "BCDFHIJL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BCDFHIKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3H", 85: "3I", 87: "3L"},
+      "BCDFHJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BCDFIJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BCDGHIJK": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3I"},
+      "BCDGHIJL": {74: "3C", 77: "3D", 79: "3H", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCDGHIKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BCDGHJKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCDGIJKL": {74: "3C", 77: "3D", 79: "3I", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCDHIJKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BCEFGHIJ": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3E"},
+      "BCEFGHIK": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3G", 87: "3I"},
+      "BCEFGHIL": {74: "3C", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BCEFGHJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3E"},
+      "BCEFGHJL": {74: "3C", 77: "3F", 79: "3H", 80: "3E", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCEFGHKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BCEFGIJK": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3I"},
+      "BCEFGIJL": {74: "3C", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCEFGIKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BCEFGJKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCEFHIJK": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3I"},
+      "BCEFHIJL": {74: "3C", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BCEFHIKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3I", 87: "3L"},
+      "BCEFHJKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BCEFIJKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BCEGHIJK": {74: "3C", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3I"},
+      "BCEGHIJL": {74: "3C", 77: "3G", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BCEGHIKL": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BCEGHJKL": {74: "3C", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BCEGIJKL": {74: "3C", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BCEHIJKL": {74: "3C", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BCFGHIJK": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3I"},
+      "BCFGHIJL": {74: "3C", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCFGHIKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BCFGHJKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCFGIJKL": {74: "3C", 77: "3F", 79: "3I", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BCFHIJKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BCGHIJKL": {74: "3C", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BDEFGHIJ": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3E"},
+      "BDEFGHIK": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3G", 87: "3I"},
+      "BDEFGHIL": {74: "3D", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BDEFGHJK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3E"},
+      "BDEFGHJL": {74: "3D", 77: "3F", 79: "3H", 80: "3E", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BDEFGHKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3G", 87: "3L"},
+      "BDEFGIJK": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3I"},
+      "BDEFGIJL": {74: "3D", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BDEFGIKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BDEFGJKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BDEFHIJK": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3I"},
+      "BDEFHIJL": {74: "3D", 77: "3F", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BDEFHIKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3I", 87: "3L"},
+      "BDEFHJKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BDEFIJKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BDEGHIJK": {74: "3D", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3I"},
+      "BDEGHIJL": {74: "3D", 77: "3G", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BDEGHIKL": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BDEGHJKL": {74: "3D", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BDEGIJKL": {74: "3D", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BDEHIJKL": {74: "3D", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BDFGHIJK": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3I"},
+      "BDFGHIJL": {74: "3D", 77: "3F", 79: "3H", 80: "3I", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BDFGHIKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BDFGHJKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BDFGIJKL": {74: "3D", 77: "3F", 79: "3I", 80: "3K", 81: "3B", 82: "3J", 85: "3G", 87: "3L"},
+      "BDFHIJKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BDGHIJKL": {74: "3D", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BEFGHIJK": {74: "3F", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3I"},
+      "BEFGHIJL": {74: "3F", 77: "3G", 79: "3E", 80: "3I", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BEFGHIKL": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3G", 87: "3L"},
+      "BEFGHJKL": {74: "3F", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3H", 85: "3J", 87: "3L"},
+      "BEFGIJKL": {74: "3F", 77: "3G", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BEFHIJKL": {74: "3F", 77: "3H", 79: "3E", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "BEGHIJKL": {74: "3B", 77: "3G", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3J", 87: "3L"},
+      "BFGHIJKL": {74: "3F", 77: "3G", 79: "3H", 80: "3K", 81: "3B", 82: "3I", 85: "3J", 87: "3L"},
+      "CDEFGHIJ": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3J", 82: "3H", 85: "3G", 87: "3E"},
+      "CDEFGHIK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3H", 85: "3G", 87: "3I"},
+      "CDEFGHIL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3E", 82: "3H", 85: "3G", 87: "3L"},
+      "CDEFGHJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3J", 82: "3H", 85: "3G", 87: "3E"},
+      "CDEFGHJL": {74: "3D", 77: "3F", 79: "3C", 80: "3E", 81: "3J", 82: "3H", 85: "3G", 87: "3L"},
+      "CDEFGHKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3H", 85: "3G", 87: "3L"},
+      "CDEFGIJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3J", 85: "3G", 87: "3I"},
+      "CDEFGIJL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3E", 82: "3J", 85: "3G", 87: "3L"},
+      "CDEFGIKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3I", 85: "3G", 87: "3L"},
+      "CDEFGJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3J", 85: "3G", 87: "3L"},
+      "CDEFHIJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3H", 85: "3J", 87: "3I"},
+      "CDEFHIJL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3E", 82: "3H", 85: "3J", 87: "3L"},
+      "CDEFHIKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3I", 82: "3H", 85: "3E", 87: "3L"},
+      "CDEFHJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3H", 85: "3J", 87: "3L"},
+      "CDEFIJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3E", 82: "3I", 85: "3J", 87: "3L"},
+      "CDEGHIJK": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3J", 82: "3H", 85: "3G", 87: "3I"},
+      "CDEGHIJL": {74: "3C", 77: "3D", 79: "3E", 80: "3I", 81: "3J", 82: "3H", 85: "3G", 87: "3L"},
+      "CDEGHIKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3G", 87: "3L"},
+      "CDEGHJKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3J", 82: "3H", 85: "3G", 87: "3L"},
+      "CDEGIJKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3I", 82: "3J", 85: "3G", 87: "3L"},
+      "CDEHIJKL": {74: "3C", 77: "3D", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3J", 87: "3L"},
+      "CDFGHIJK": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3J", 82: "3H", 85: "3G", 87: "3I"},
+      "CDFGHIJL": {74: "3D", 77: "3F", 79: "3C", 80: "3I", 81: "3J", 82: "3H", 85: "3G", 87: "3L"},
+      "CDFGHIKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3I", 82: "3H", 85: "3G", 87: "3L"},
+      "CDFGHJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3J", 82: "3H", 85: "3G", 87: "3L"},
+      "CDFGIJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3I", 82: "3J", 85: "3G", 87: "3L"},
+      "CDFHIJKL": {74: "3D", 77: "3F", 79: "3C", 80: "3K", 81: "3I", 82: "3H", 85: "3J", 87: "3L"},
+      "CDGHIJKL": {74: "3C", 77: "3D", 79: "3H", 80: "3K", 81: "3I", 82: "3J", 85: "3G", 87: "3L"},
+      "CEFGHIJK": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3J", 82: "3H", 85: "3G", 87: "3I"},
+      "CEFGHIJL": {74: "3C", 77: "3F", 79: "3E", 80: "3I", 81: "3J", 82: "3H", 85: "3G", 87: "3L"},
+      "CEFGHIKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3G", 87: "3L"},
+      "CEFGHJKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3J", 82: "3H", 85: "3G", 87: "3L"},
+      "CEFGIJKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3J", 85: "3G", 87: "3L"},
+      "CEFHIJKL": {74: "3C", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3J", 87: "3L"},
+      "CEGHIJKL": {74: "3C", 77: "3G", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3J", 87: "3L"},
+      "CFGHIJKL": {74: "3C", 77: "3F", 79: "3H", 80: "3K", 81: "3I", 82: "3J", 85: "3G", 87: "3L"},
+      "DEFGHIJK": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3J", 82: "3H", 85: "3G", 87: "3I"},
+      "DEFGHIJL": {74: "3D", 77: "3F", 79: "3E", 80: "3I", 81: "3J", 82: "3H", 85: "3G", 87: "3L"},
+      "DEFGHIKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3G", 87: "3L"},
+      "DEFGHJKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3J", 82: "3H", 85: "3G", 87: "3L"},
+      "DEFGIJKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3J", 85: "3G", 87: "3L"},
+      "DEFHIJKL": {74: "3D", 77: "3F", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3J", 87: "3L"},
+      "DEGHIJKL": {74: "3D", 77: "3G", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3J", 87: "3L"},
+      "DFGHIJKL": {74: "3D", 77: "3F", 79: "3H", 80: "3K", 81: "3I", 82: "3J", 85: "3G", 87: "3L"},
+      "EFGHIJKL": {74: "3F", 77: "3G", 79: "3E", 80: "3K", 81: "3I", 82: "3H", 85: "3J", 87: "3L"}
+    };
     const matches = Object.entries(groups).flatMap(([group, teams]) =>
       pairOrder.map(([a, b], index) => makeMatch(group, index, teams[a], teams[b]))
     );
@@ -745,6 +1491,7 @@
       koPicks: {},
       activeMatch: null,
       activeMode: "",
+      poissonView: "overlay",
       rounds: [],
       bracketBuilt: false
     };
@@ -753,6 +1500,10 @@
     const knockoutView = document.getElementById("knockout-view");
     const roundsEl = document.getElementById("rounds");
     const dialog = document.getElementById("match-dialog");
+    const forecastDialog = document.getElementById("forecast-dialog");
+    const infoDialog = document.getElementById("info-dialog");
+    const forecastTeamSelect = document.getElementById("forecast-team-select");
+    const forecastResults = document.getElementById("forecast-results");
 
     function makeMatch(group, index, a, b) {
       const projection = projectionFor(a, b, group.charCodeAt(0) + index);
@@ -779,12 +1530,46 @@
 
     async function loadProjectionJson() {
       try {
-        const response = await fetch("./wc2026_predictions.json");
+        const response = await fetch(`./wc2026_predictions.json?v=${Date.now()}`, { cache: "no-store" });
         const data = await response.json();
         loadPredictionJson(data);
       } catch (error) {
         console.error("Failed to load prediction data:", error);
       }
+    }
+
+    function loadForecastJson(data) {
+      forecastMetadata = data.metadata || {};
+      data.teams.forEach(team => {
+        forecastIndex[normalizeTeam(team.team)] = team;
+      });
+      forecastsLoaded = true;
+      populateForecastTeams(data.teams);
+      if (forecastDialog.open) renderTeamForecast();
+    }
+
+    async function loadTeamForecastJson() {
+      const paths = ["./team_forecasts.json", "./data/team_forecasts.json", "../3.SimulationStudy-Python/PredictPerformance.json"];
+      for (const path of paths) {
+        try {
+          const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
+          if (!response.ok) continue;
+          const data = await response.json();
+          loadForecastJson(data);
+          return;
+        } catch (error) {
+          console.warn(`Failed to load team forecasts from ${path}:`, error);
+        }
+      }
+      forecastResults.innerHTML = `<div class="hint">Team forecasts are unavailable. Run the performance notebook and place the JSON in the dashboard folder.</div>`;
+    }
+
+    function populateForecastTeams(teams) {
+      forecastTeamSelect.innerHTML = teams
+        .slice()
+        .sort((a, b) => a.team.localeCompare(b.team))
+        .map(team => `<option value="${normalizeTeam(team.team)}">${team.team}</option>`)
+        .join("");
     }
 
     function projectionFor(a, b, seed) {
@@ -819,11 +1604,74 @@
       return {
         goalsA,
         goalsB,
+        lambdaA: sameOrder ? row.team1_expected_goals : row.team2_expected_goals,
+        lambdaB: sameOrder ? row.team2_expected_goals : row.team1_expected_goals,
         aProb: (sameOrder ? row.winteam1_prob : row.winteam2_prob) * 100,
         drawProb: row.tie_prob * 100,
         bProb: (sameOrder ? row.winteam2_prob : row.winteam1_prob) * 100,
         scoreOdds: scores
       };
+    }
+
+    function knockoutProjectionFor(a, b, seed) {
+      const projection = projectionFor(a, b, seed);
+      if (!projection) return null;
+      const rawA = projection.aProb + 0.5 * projection.drawProb;
+      const cappedA = Math.min(Math.max(rawA, 20), 80);
+      return {
+        ...projection,
+        aProb: cappedA,
+        drawProb: 0,
+        bProb: 100 - cappedA
+      };
+    }
+
+    function openTeamForecasts() {
+      if (!forecastsLoaded) {
+        forecastResults.innerHTML = `<div class="hint">Loading team forecasts...</div>`;
+      } else if (!forecastTeamSelect.value && forecastTeamSelect.options.length) {
+        forecastTeamSelect.value = forecastTeamSelect.options[0].value;
+      }
+      renderTeamForecast();
+      forecastDialog.showModal();
+    }
+
+    function renderTeamForecast() {
+      if (!forecastsLoaded) return;
+      const selected = forecastTeamSelect.value;
+      const forecast = forecastIndex[selected];
+      if (!forecast) {
+        forecastResults.innerHTML = `<div class="hint">Choose a team to view its forecast.</div>`;
+        return;
+      }
+
+      const iterations = Number(forecastMetadata?.iterations || 0);
+      const stages = [
+        ["R32", "Round of 32"],
+        ["R16", "Round of 16"],
+        ["QF", "Quarter-finals"],
+        ["SF", "Semi-finals"],
+        ["finals", "Final"],
+        ["win", "Win"]
+      ];
+
+      document.getElementById("forecast-subtitle").textContent = iterations
+        ? `${forecast.team} forecast from ${iterations.toLocaleString()} tournament simulations. Game win probabilities cap at 94%; knockout advancement caps at ${Math.round((forecastMetadata?.knockout_max_advance_prob ?? 0.8) * 100)}%.`
+        : `${forecast.team} forecast`;
+
+      forecastResults.innerHTML = stages.map(([key, label]) => {
+        const count = Number(forecast[key] || 0);
+        const probability = iterations ? count / iterations : 0;
+        const percent = Math.round(probability * 1000) / 10;
+        return `
+          <div class="forecast-row">
+            <div class="forecast-stage">${label}</div>
+            <div class="forecast-track" aria-label="${label} chance">
+              <span class="forecast-fill" style="width: ${Math.min(percent, 100)}%"></span>
+            </div>
+            <div class="forecast-value">${percent.toFixed(1)}% · ${count.toLocaleString()}</div>
+          </div>`;
+      }).join("");
     }
 
     function render() {
@@ -920,6 +1768,51 @@
       );
     }
 
+    function rankedGroupRows() {
+      return Object.keys(groups).flatMap(group =>
+        standings(group).map((team, index) => ({ ...team, group, groupRank: index + 1 }))
+      );
+    }
+
+    function groupPositions() {
+      return Object.fromEntries(
+        Object.keys(groups).map(group => [
+          group,
+          Object.fromEntries(standings(group).map((team, index) => [index + 1, team.name]))
+        ])
+      );
+    }
+
+    function bestThirdGroups() {
+      return rankedGroupRows()
+        .filter(team => team.groupRank === 3)
+        .sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf || ratings[b.name] - ratings[a.name])
+        .slice(0, 8)
+        .map(team => team.group);
+    }
+
+    function thirdPlaceAssignment(qualifiedThirdGroups) {
+      if (qualifiedThirdGroups.length !== 8) {
+        throw new Error(`Expected exactly 8 third-place groups, got ${qualifiedThirdGroups.length}: ${qualifiedThirdGroups.join(",")}`);
+      }
+      const key = qualifiedThirdGroups.slice().sort().join("");
+      const assignment = thirdPlaceAssignmentTable[key];
+      if (!assignment) {
+        throw new Error(`No FIFA third-place assignment found for qualified groups key: ${key}`);
+      }
+      return assignment;
+    }
+
+    function resolveBracketSlot(slot, positions, thirdAssignment, matchNumber) {
+      const rank = Number(slot[0]);
+      if (rank === 1 || rank === 2) return positions[slot[1]][rank];
+      const assignedSlot = thirdAssignment[matchNumber];
+      if (!assignedSlot) {
+        throw new Error(`No third-place assignment found for match ${matchNumber} and slot ${slot}`);
+      }
+      return positions[assignedSlot[1]][3];
+    }
+
     function openMatch(matchId) {
       const match = matches.find(item => item.id === matchId);
       if (!match?.projection) return;
@@ -941,7 +1834,7 @@
     function openKnockoutMatch(matchId) {
       const match = state.rounds.flatMap(round => round.matches).find(item => item.id === matchId);
       if (!match || match.a === "TBD" || match.b === "TBD") return;
-      const projection = projectionFor(match.a, match.b, match.id.length);
+      const projection = knockoutProjectionFor(match.a, match.b, match.id.length);
       if (!projection) return;
       state.activeMatch = match;
       state.activeMode = "knockout";
@@ -963,12 +1856,15 @@
       document.getElementById("modal-team-a").textContent = a;
       document.getElementById("modal-team-b").textContent = b;
       document.getElementById("modal-score").textContent = `${projection.goalsA} - ${projection.goalsB}`;
-      document.getElementById("modal-a-note").textContent = `${Math.round(projection.aProb)}% win projection`;
-      document.getElementById("modal-b-note").textContent = `${Math.round(projection.bProb)}% win projection`;
+      document.getElementById("modal-a-note").textContent = `${Math.round(projection.aProb)}% ${mode === "knockout" ? "advance" : "win"} projection`;
+      document.getElementById("modal-b-note").textContent = `${Math.round(projection.bProb)}% ${mode === "knockout" ? "advance" : "win"} projection`;
       document.getElementById("prob-a").style.width = `${projection.aProb}%`;
       document.getElementById("prob-d").style.width = `${projection.drawProb}%`;
       document.getElementById("prob-b").style.width = `${projection.bProb}%`;
-      document.getElementById("modal-prob-text").textContent = `${a} ${Math.round(projection.aProb)}% · Draw ${Math.round(projection.drawProb)}% · ${b} ${Math.round(projection.bProb)}%. ${mode === "group" ? "Group standings use the selected scoreline for points, goals for, goals against, and goal difference." : "Knockout rounds use winner selection only; score probabilities are shown for context."}`;
+      document.getElementById("modal-prob-text").textContent = mode === "group"
+        ? `${a} ${Math.round(projection.aProb)}% · Draw ${Math.round(projection.drawProb)}% · ${b} ${Math.round(projection.bProb)}%. Game win probabilities cap at 94%; exact score odds remain raw model scores. Group standings use the selected scoreline for points, goals for, goals against, and goal difference.`
+        : `${a} ${Math.round(projection.aProb)}% · ${b} ${Math.round(projection.bProb)}%. Knockout advancement splits ties 50/50 for penalties and caps either team at 80%; score probabilities are shown for context.`;
+      renderPoissonCurve(a, b, projection);
       document.getElementById("score-grid").innerHTML = projection.scoreOdds.map((item, index) => {
         const selectedScore = mode === "group" && pick && `${pick.scoreA}-${pick.scoreB}` === item.score;
         const tag = mode === "group" ? "button" : "div";
@@ -992,6 +1888,58 @@
       chooseDraw.classList.toggle("selected", mode === "group" && pick?.result === "draw");
       chooseB.classList.toggle("selected", mode === "group" ? pick?.result === "b" : pick === b);
       dialog.showModal();
+    }
+
+    function renderPoissonCurve(a, b, projection) {
+      const view = state.poissonView || "overlay";
+      const homeSeries = poissonCurveSeries(projection.lambdaA);
+      const awaySeries = poissonCurveSeries(projection.lambdaB);
+      const visible = [
+        ...(view !== "away" ? [{ team: a, color: "var(--green)", className: "legend-home", series: homeSeries }] : []),
+        ...(view !== "home" ? [{ team: b, color: "var(--blue)", className: "legend-away", series: awaySeries }] : [])
+      ];
+      const maxProbability = Math.max(...homeSeries, ...awaySeries, 1);
+      const points = visible.map(item => ({
+        ...item,
+        points: item.series.map((probability, goals) => {
+          const x = 34 + goals * 42;
+          const y = 128 - (probability / maxProbability) * 94;
+          return `${x},${y}`;
+        }).join(" ")
+      }));
+      document.getElementById("poisson-plot").innerHTML = `
+        <svg viewBox="0 0 300 150" role="img" aria-label="Poisson distribution curve">
+          <line x1="28" y1="128" x2="286" y2="128" stroke="#d8dee8" />
+          <line x1="28" y1="24" x2="28" y2="128" stroke="#d8dee8" />
+          ${[0, 1, 2, 3, 4, 5].map(goal => `<text x="${34 + goal * 42}" y="145" text-anchor="middle" font-size="10" fill="#647083">${goal}</text>`).join("")}
+          ${points.map(item => `
+            <polyline points="${item.points}" fill="none" stroke="${item.color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            ${item.series.map((probability, goals) => {
+              const x = 34 + goals * 42;
+              const y = 128 - (probability / maxProbability) * 94;
+              return `<circle cx="${x}" cy="${y}" r="3.5" fill="${item.color}"><title>${item.team}: ${goals} goals ${probability.toFixed(1)}%</title></circle>`;
+            }).join("")}
+          `).join("")}
+        </svg>
+      `;
+      document.getElementById("poisson-legend").innerHTML = visible.map(item =>
+        `<span><i class="legend-dot ${item.className}"></i>${item.team} λ ${item === visible[0] && view === "away" ? projection.lambdaB.toFixed(2) : item.team === a ? projection.lambdaA.toFixed(2) : projection.lambdaB.toFixed(2)}</span>`
+      ).join("");
+      document.querySelectorAll("[data-poisson-view]").forEach(button => {
+        button.classList.toggle("active", button.dataset.poissonView === view);
+      });
+    }
+
+    function poissonCurveSeries(lambda) {
+      return [0, 1, 2, 3, 4, 5].map(goals => poissonProbability(goals, lambda) * 100);
+    }
+
+    function poissonProbability(goals, lambda) {
+      return Math.exp(-lambda) * Math.pow(lambda, goals) / factorial(goals);
+    }
+
+    function factorial(value) {
+      return value <= 1 ? 1 : value * factorial(value - 1);
     }
 
     function chooseGroupResult(result, score) {
@@ -1059,17 +2007,25 @@
       state.bracketBuilt = true;
       groupsView.style.display = "none";
       knockoutView.classList.add("show");
-      const q = qualifiers();
-      const r32 = [];
-      for (let i = 0; i < 16; i += 1) {
-        r32.push({ id: `R32-${i}`, round: "Round of 32", a: q[i].name, b: q[31 - i].name });
-      }
+      const positions = groupPositions();
+      const thirdAssignment = thirdPlaceAssignment(bestThirdGroups());
+      const r32 = r32Template.map(match => ({
+        id: `R32-${match.matchNumber}`,
+        matchNumber: match.matchNumber,
+        round: "Round of 32",
+        a: resolveBracketSlot(match.a, positions, thirdAssignment, match.matchNumber),
+        b: resolveBracketSlot(match.b, positions, thirdAssignment, match.matchNumber)
+      }));
+      const r16 = nextRound("R16", r32);
+      const qf = nextRound("QF", [...r32, ...r16]);
+      const sf = nextRound("SF", [...r32, ...r16, ...qf]);
+      const final = nextRound("F", [...r32, ...r16, ...qf, ...sf]);
       const rounds = [
         { key: "R32", title: "Round of 32", matches: r32 },
-        { key: "R16", title: "Round of 16", matches: nextRound("R16", r32, 8) },
-        { key: "QF", title: "Quarter-finals", matches: nextRound("QF", nextRound("R16", r32, 8), 4) },
-        { key: "SF", title: "Semi-finals", matches: nextRound("SF", nextRound("QF", nextRound("R16", r32, 8), 4), 2) },
-        { key: "F", title: "Final", matches: nextRound("F", nextRound("SF", nextRound("QF", nextRound("R16", r32, 8), 4), 2), 1) }
+        { key: "R16", title: "Round of 16", matches: r16 },
+        { key: "QF", title: "Quarter-finals", matches: qf },
+        { key: "SF", title: "Semi-finals", matches: sf },
+        { key: "F", title: "Final", matches: final }
       ];
       state.rounds = rounds;
       roundsEl.innerHTML = rounds.map(renderRound).join("");
@@ -1080,16 +2036,16 @@
 
     function autoPickKnockout() {
       let pickedOne = true;
-      while (pickedOne && !state.koPicks["F-0"]) {
+      while (pickedOne && !state.koPicks["F-104"]) {
         pickedOne = false;
         const nextMatch = state.rounds
           .flatMap(round => round.matches)
           .find(match => !state.koPicks[match.id] && match.a !== "TBD" && match.b !== "TBD");
 
         if (nextMatch) {
-          const projection = projectionFor(nextMatch.a, nextMatch.b, nextMatch.id.length);
-          if (!projection) return;
-          state.koPicks[nextMatch.id] = projection.aProb >= projection.bProb ? nextMatch.a : nextMatch.b;
+          const knockoutProjection = knockoutProjectionFor(nextMatch.a, nextMatch.b, nextMatch.id.length);
+          if (!knockoutProjection) return;
+          state.koPicks[nextMatch.id] = knockoutProjection.aProb >= knockoutProjection.bProb ? nextMatch.a : nextMatch.b;
           buildBracket();
           pickedOne = true;
         }
@@ -1101,18 +2057,18 @@
     }
 
     function nextRound(key, previous, count) {
-      const output = [];
-      for (let i = 0; i < count; i += 1) {
-        const left = previous[i * 2];
-        const right = previous[i * 2 + 1];
-        output.push({
-          id: `${key}-${i}`,
+      const previousByNumber = Object.fromEntries(previous.map(match => [match.matchNumber, match]));
+      return knockoutRoundMap[key].map(([matchNumber, leftNumber, rightNumber]) => {
+        const left = previousByNumber[leftNumber];
+        const right = previousByNumber[rightNumber];
+        return {
+          id: `${key}-${matchNumber}`,
+          matchNumber,
           round: key,
-          a: winnerFor(left) || "TBD",
-          b: winnerFor(right) || "TBD"
-        });
-      }
-      return output;
+          a: left ? winnerFor(left) || "TBD" : "TBD",
+          b: right ? winnerFor(right) || "TBD" : "TBD"
+        };
+      });
     }
 
     function renderRound(round) {
@@ -1128,7 +2084,7 @@
     function renderKoMatch(match) {
       const selected = state.koPicks[match.id];
       const disabled = match.a === "TBD" || match.b === "TBD";
-      const proj = disabled ? null : projectionFor(match.a, match.b, match.id.length);
+      const proj = disabled ? null : knockoutProjectionFor(match.a, match.b, match.id.length);
       const label = disabled ? "Waiting for previous picks" : proj ? `${proj.goalsA}-${proj.goalsB} model` : "Loading projection";
       return `
         <button class="match-btn ko-match" data-ko="${match.id}" ${disabled || !proj ? "disabled" : ""}>
@@ -1167,14 +2123,14 @@
     }
 
     function updateChampion() {
-      const champion = state.koPicks["F-0"] || "";
+      const champion = state.koPicks["F-104"] || "";
       document.getElementById("champion-name").textContent = champion || "Choose the final winner";
       document.getElementById("champion-metric").textContent = champion || "TBD";
     }
 
     function activeRoundKey(rounds) {
       const round = rounds.find(item => item.matches.some(match => !state.koPicks[match.id] && match.a !== "TBD" && match.b !== "TBD"));
-      if (!round) return state.koPicks["F-0"] ? "final" : "r32";
+      if (!round) return state.koPicks["F-104"] ? "final" : "r32";
       return round.key.toLowerCase();
     }
 
@@ -1211,10 +2167,24 @@
       const [scoreA, scoreB] = button.dataset.score.split("-").map(Number);
       chooseGroupResult(resultFromScore(scoreA, scoreB), { scoreA, scoreB });
     });
+    document.querySelector(".poisson-controls").addEventListener("click", event => {
+      const button = event.target.closest("[data-poisson-view]");
+      if (!button || !state.activeMatch) return;
+      state.poissonView = button.dataset.poissonView;
+      const a = state.activeMatch.a;
+      const b = state.activeMatch.b;
+      const projection = state.activeMode === "knockout" ? knockoutProjectionFor(a, b, state.activeMatch.id.length) : state.activeMatch.projection;
+      renderPoissonCurve(a, b, projection);
+    });
     document.getElementById("choose-a").addEventListener("click", () => chooseModalSide("a"));
     document.getElementById("choose-draw").addEventListener("click", () => chooseGroupResult("draw"));
     document.getElementById("choose-b").addEventListener("click", () => chooseModalSide("b"));
     document.getElementById("close-dialog").addEventListener("click", () => dialog.close());
+    document.getElementById("model-info").addEventListener("click", () => infoDialog.showModal());
+    document.getElementById("close-info-dialog").addEventListener("click", () => infoDialog.close());
+    document.getElementById("team-forecasts").addEventListener("click", openTeamForecasts);
+    document.getElementById("close-forecast-dialog").addEventListener("click", () => forecastDialog.close());
+    forecastTeamSelect.addEventListener("change", renderTeamForecast);
     document.getElementById("auto-pick").addEventListener("click", autoPick);
     document.getElementById("reset").addEventListener("click", reset);
     document.getElementById("build-bracket").addEventListener("click", buildBracket);
@@ -1226,6 +2196,7 @@
 
     render();
     loadProjectionJson();
+    loadTeamForecastJson();
   </script>
 </body>
 </html>

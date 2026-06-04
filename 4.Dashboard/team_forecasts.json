@@ -1,0 +1,447 @@
+{
+  "metadata": {
+    "tournament": "WC-2026",
+    "iterations": 10000,
+    "seed": 2026,
+    "odds_source": "4.Dashboard/wc2026_predictions.json",
+    "format": "12 groups of 4; group winners, runners-up, and 8 best third-place teams advance to R32; FIFA 2026 knockout slot constraints",
+    "stage_counts_are_entries": true,
+    "knockout_tie_policy": "Ties are split 50/50 between teams to approximate penalty shootouts.",
+    "knockout_max_advance_prob": 0.8,
+    "knockout_probability_policy": "Knockout advancement probabilities split ties 50/50 for penalties and cap either team at 80% to advance."
+  },
+  "teams": [
+    {
+      "team": "Algeria",
+      "R32": 7033,
+      "R16": 2665,
+      "QF": 1317,
+      "SF": 590,
+      "finals": 223,
+      "win": 71
+    },
+    {
+      "team": "Argentina",
+      "R32": 9372,
+      "R16": 5625,
+      "QF": 3769,
+      "SF": 2308,
+      "finals": 1247,
+      "win": 559
+    },
+    {
+      "team": "Australia",
+      "R32": 5571,
+      "R16": 2587,
+      "QF": 1067,
+      "SF": 375,
+      "finals": 116,
+      "win": 32
+    },
+    {
+      "team": "Austria",
+      "R32": 6800,
+      "R16": 2511,
+      "QF": 1222,
+      "SF": 472,
+      "finals": 166,
+      "win": 51
+    },
+    {
+      "team": "Belgium",
+      "R32": 9737,
+      "R16": 5497,
+      "QF": 2749,
+      "SF": 949,
+      "finals": 378,
+      "win": 145
+    },
+    {
+      "team": "Bosnia and Herzegovina",
+      "R32": 7280,
+      "R16": 2713,
+      "QF": 912,
+      "SF": 228,
+      "finals": 54,
+      "win": 13
+    },
+    {
+      "team": "Brazil",
+      "R32": 8990,
+      "R16": 4758,
+      "QF": 2355,
+      "SF": 1099,
+      "finals": 498,
+      "win": 208
+    },
+    {
+      "team": "Cabo Verde",
+      "R32": 2050,
+      "R16": 456,
+      "QF": 97,
+      "SF": 15,
+      "finals": 3,
+      "win": 2
+    },
+    {
+      "team": "Canada",
+      "R32": 9819,
+      "R16": 6604,
+      "QF": 3720,
+      "SF": 1854,
+      "finals": 856,
+      "win": 361
+    },
+    {
+      "team": "Colombia",
+      "R32": 8118,
+      "R16": 3714,
+      "QF": 1377,
+      "SF": 580,
+      "finals": 197,
+      "win": 59
+    },
+    {
+      "team": "Congo DR",
+      "R32": 3138,
+      "R16": 805,
+      "QF": 243,
+      "SF": 54,
+      "finals": 10,
+      "win": 2
+    },
+    {
+      "team": "Croatia",
+      "R32": 9136,
+      "R16": 5027,
+      "QF": 1798,
+      "SF": 860,
+      "finals": 367,
+      "win": 139
+    },
+    {
+      "team": "Curacao",
+      "R32": 1680,
+      "R16": 403,
+      "QF": 87,
+      "SF": 20,
+      "finals": 3,
+      "win": 0
+    },
+    {
+      "team": "Czechia",
+      "R32": 7675,
+      "R16": 3879,
+      "QF": 1477,
+      "SF": 488,
+      "finals": 179,
+      "win": 61
+    },
+    {
+      "team": "Ecuador",
+      "R32": 9790,
+      "R16": 6541,
+      "QF": 3849,
+      "SF": 2424,
+      "finals": 1304,
+      "win": 707
+    },
+    {
+      "team": "Egypt",
+      "R32": 6439,
+      "R16": 1639,
+      "QF": 403,
+      "SF": 106,
+      "finals": 29,
+      "win": 7
+    },
+    {
+      "team": "England",
+      "R32": 9948,
+      "R16": 7346,
+      "QF": 5063,
+      "SF": 3197,
+      "finals": 2009,
+      "win": 1081
+    },
+    {
+      "team": "France",
+      "R32": 9466,
+      "R16": 6531,
+      "QF": 4206,
+      "SF": 2664,
+      "finals": 1444,
+      "win": 772
+    },
+    {
+      "team": "Germany",
+      "R32": 9076,
+      "R16": 4625,
+      "QF": 2228,
+      "SF": 1095,
+      "finals": 502,
+      "win": 192
+    },
+    {
+      "team": "Ghana",
+      "R32": 2978,
+      "R16": 756,
+      "QF": 183,
+      "SF": 55,
+      "finals": 8,
+      "win": 3
+    },
+    {
+      "team": "Haiti",
+      "R32": 3449,
+      "R16": 947,
+      "QF": 263,
+      "SF": 60,
+      "finals": 11,
+      "win": 1
+    },
+    {
+      "team": "Iran",
+      "R32": 3471,
+      "R16": 730,
+      "QF": 170,
+      "SF": 33,
+      "finals": 7,
+      "win": 0
+    },
+    {
+      "team": "Iraq",
+      "R32": 1682,
+      "R16": 485,
+      "QF": 139,
+      "SF": 32,
+      "finals": 3,
+      "win": 1
+    },
+    {
+      "team": "Ivory Coast",
+      "R32": 6020,
+      "R16": 2096,
+      "QF": 713,
+      "SF": 229,
+      "finals": 70,
+      "win": 21
+    },
+    {
+      "team": "Japan",
+      "R32": 8315,
+      "R16": 4200,
+      "QF": 2070,
+      "SF": 931,
+      "finals": 386,
+      "win": 147
+    },
+    {
+      "team": "Jordan",
+      "R32": 3881,
+      "R16": 1149,
+      "QF": 449,
+      "SF": 142,
+      "finals": 33,
+      "win": 8
+    },
+    {
+      "team": "Mexico",
+      "R32": 8631,
+      "R16": 4921,
+      "QF": 2020,
+      "SF": 771,
+      "finals": 284,
+      "win": 92
+    },
+    {
+      "team": "Morocco",
+      "R32": 8716,
+      "R16": 4315,
+      "QF": 2083,
+      "SF": 922,
+      "finals": 404,
+      "win": 140
+    },
+    {
+      "team": "Netherlands",
+      "R32": 9372,
+      "R16": 5819,
+      "QF": 3590,
+      "SF": 1925,
+      "finals": 921,
+      "win": 462
+    },
+    {
+      "team": "New Zealand",
+      "R32": 6929,
+      "R16": 1963,
+      "QF": 563,
+      "SF": 161,
+      "finals": 41,
+      "win": 9
+    },
+    {
+      "team": "Norway",
+      "R32": 9105,
+      "R16": 5920,
+      "QF": 3617,
+      "SF": 2136,
+      "finals": 1153,
+      "win": 590
+    },
+    {
+      "team": "Panama",
+      "R32": 3110,
+      "R16": 791,
+      "QF": 191,
+      "SF": 47,
+      "finals": 11,
+      "win": 4
+    },
+    {
+      "team": "Paraguay",
+      "R32": 5512,
+      "R16": 2578,
+      "QF": 990,
+      "SF": 364,
+      "finals": 116,
+      "win": 33
+    },
+    {
+      "team": "Portugal",
+      "R32": 9445,
+      "R16": 5910,
+      "QF": 3020,
+      "SF": 1685,
+      "finals": 810,
+      "win": 315
+    },
+    {
+      "team": "Qatar",
+      "R32": 638,
+      "R16": 140,
+      "QF": 38,
+      "SF": 7,
+      "finals": 2,
+      "win": 0
+    },
+    {
+      "team": "Saudi Arabia",
+      "R32": 2841,
+      "R16": 632,
+      "QF": 153,
+      "SF": 36,
+      "finals": 8,
+      "win": 0
+    },
+    {
+      "team": "Scotland",
+      "R32": 6126,
+      "R16": 2183,
+      "QF": 706,
+      "SF": 221,
+      "finals": 69,
+      "win": 19
+    },
+    {
+      "team": "Senegal",
+      "R32": 6937,
+      "R16": 3390,
+      "QF": 1646,
+      "SF": 711,
+      "finals": 289,
+      "win": 110
+    },
+    {
+      "team": "South Africa",
+      "R32": 3656,
+      "R16": 1229,
+      "QF": 340,
+      "SF": 65,
+      "finals": 18,
+      "win": 5
+    },
+    {
+      "team": "South Korea",
+      "R32": 7534,
+      "R16": 3737,
+      "QF": 1428,
+      "SF": 458,
+      "finals": 167,
+      "win": 56
+    },
+    {
+      "team": "Spain",
+      "R32": 9996,
+      "R16": 7913,
+      "QF": 6187,
+      "SF": 4914,
+      "finals": 3664,
+      "win": 2767
+    },
+    {
+      "team": "Sweden",
+      "R32": 5256,
+      "R16": 1682,
+      "QF": 580,
+      "SF": 190,
+      "finals": 59,
+      "win": 14
+    },
+    {
+      "team": "Switzerland",
+      "R32": 9541,
+      "R16": 5606,
+      "QF": 2701,
+      "SF": 1117,
+      "finals": 436,
+      "win": 164
+    },
+    {
+      "team": "Tunisia",
+      "R32": 4169,
+      "R16": 1192,
+      "QF": 376,
+      "SF": 105,
+      "finals": 32,
+      "win": 9
+    },
+    {
+      "team": "Turkey",
+      "R32": 8383,
+      "R16": 5309,
+      "QF": 3019,
+      "SF": 1357,
+      "finals": 664,
+      "win": 286
+    },
+    {
+      "team": "United States",
+      "R32": 8019,
+      "R16": 4979,
+      "QF": 2591,
+      "SF": 1090,
+      "finals": 471,
+      "win": 197
+    },
+    {
+      "team": "Uruguay",
+      "R32": 8825,
+      "R16": 3292,
+      "QF": 1496,
+      "SF": 589,
+      "finals": 186,
+      "win": 55
+    },
+    {
+      "team": "Uzbekistan",
+      "R32": 6345,
+      "R16": 2210,
+      "QF": 739,
+      "SF": 269,
+      "finals": 92,
+      "win": 30
+    }
+  ]
+}
