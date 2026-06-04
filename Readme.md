@@ -17,7 +17,7 @@ The objective is not simply to predict winners, but to estimate complete probabi
 
 View the forecasting dashboard here:
 
-**[WC2026Forecast Dashboard]()**
+**[WC2026Forecast Dashboard](https://eialnisman.github.io/WorldCup2026Forecasting/4.Dashboard/)**
 
 ---
 
